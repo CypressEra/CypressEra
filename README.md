@@ -13,6 +13,8 @@ documents never leave your servers.
 Try the hosted version at [cypressera.ai](https://cypressera.ai), or
 self-host with the quick start below.
 
+![CypressEra — the AI assistant answers a power-flow question on the IEEE 25-bus network while the diagram view shows the solved case](docs/screenshot.png)
+
 ## Capabilities
 
 - **AI-automated operation** — a natural-language interface that understands
