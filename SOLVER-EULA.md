@@ -79,5 +79,5 @@ steps to correct past violations within 32 days of receiving notice. Sections
 
 This agreement is the entire agreement regarding the Solver binary. If any
 provision is unenforceable, the remainder stays in effect. This agreement is
-governed by the laws of **[JURISDICTION — set to where CypressEra is
-established]**, excluding its conflict-of-law rules.
+governed by the laws of the Province of British Columbia and the federal
+laws of Canada applicable therein, excluding conflict-of-law rules.

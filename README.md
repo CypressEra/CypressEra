@@ -66,7 +66,12 @@ git clone https://github.com/CypressEra/CypressEra.git
 cd CypressEra
 
 ./scripts/get-solver.sh                   # fetch the flow-solver binary (public image)
-cp product-deploy/.env.template .env      # then set the two required keys
+
+cp product-deploy/.env.template .env
+nano .env            # set the only two required values (same as the server setup):
+                     #   OPENAI_API_KEY=...        (LLM for the assistant)
+                     #   KB_EMBEDDING_API_KEY=...  (embeddings for the knowledge base)
+
 echo "AUTH_MODE=none" >> .env             # skip login for local development
 
 docker compose up -d                      # builds all services from source
