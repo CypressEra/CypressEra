@@ -101,5 +101,5 @@ Open a GitHub issue with:
   secrets before pasting**.
 
 For suspected security vulnerabilities, please email
-**[SECURITY CONTACT — e.g. security@cypressera.ai]** instead of opening a
+**support@cypressera.ai** instead of opening a
 public issue.

@@ -1,6 +1,6 @@
 # CypressEra Flow-Solver Binary License Agreement
 
-**Version 1.0 — [DATE]**
+**Version 1.0 — August 3, 2026**
 
 This agreement is between CypressEra ("we", "us") and you, the person or
 organization using the flow-solver binary ("the Solver"). The Solver is the
@@ -31,7 +31,7 @@ Any use for a commercial purpose — including use inside a for-profit business,
 use in providing services to customers, or use supporting commercial
 decision-making — requires a separate commercial license from CypressEra.
 
-Contact: **[CONTACT EMAIL — e.g. licensing@cypressera.ai]**
+Contact: **support@cypressera.ai**
 
 ## 3. What you may not do
 
