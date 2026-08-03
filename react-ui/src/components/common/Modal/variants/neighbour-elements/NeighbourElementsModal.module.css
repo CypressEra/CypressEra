@@ -1,0 +1,198 @@
+/* ── Layout ────────────────────────────────────────────────────────────────── */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+  font-size: 13px;
+  gap: 0;
+}
+
+/* ── Search bar (always visible, fixed height) ─────────────────────────────── */
+
+.searchBar {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 12px;
+}
+
+.searchRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fieldGroup {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.fieldLabel {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.45);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.input {
+  width: 80px;
+  height: 28px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  background: rgba(0, 0, 0, 0.06);
+  color: inherit;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: background 0.15s, box-shadow 0.15s;
+}
+
+.input::placeholder {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.input:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.input:focus {
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 0 1.5px rgba(0, 122, 255, 0.5);
+}
+
+.numberInput {
+  width: 64px;
+  height: 28px;
+  padding: 0 8px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  background: rgba(0, 0, 0, 0.06);
+  color: inherit;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+  text-align: center;
+  transition: background 0.15s, box-shadow 0.15s;
+}
+
+.numberInput:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.numberInput:focus {
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 0 1.5px rgba(0, 122, 255, 0.5);
+}
+
+/* ── Separator ─────────────────────────────────────────────────────────────── */
+
+.separator {
+  flex-shrink: 0;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.07);
+  margin: 0 -20px;
+}
+
+/* ── Results pane (fills remaining space) ──────────────────────────────────── */
+
+.resultsPane {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding-top: 12px;
+}
+
+.placeholder {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.28);
+  text-align: center;
+  padding: 0 16px;
+  user-select: none;
+}
+
+.emptyResult {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+  text-align: center;
+  padding: 0 8px;
+}
+
+/* ── Dark mode ─────────────────────────────────────────────────────────────── */
+
+:global(html.dark) .fieldLabel,
+:global(.dark) .fieldLabel {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+:global(html.dark) .input,
+:global(.dark) .input {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+:global(html.dark) .input::placeholder,
+:global(.dark) .input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+:global(html.dark) .input:hover,
+:global(.dark) .input:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+:global(html.dark) .input:focus,
+:global(.dark) .input:focus {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 1.5px rgba(10, 132, 255, 0.6);
+}
+
+:global(html.dark) .numberInput,
+:global(.dark) .numberInput {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+:global(html.dark) .numberInput:hover,
+:global(.dark) .numberInput:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+:global(html.dark) .numberInput:focus,
+:global(.dark) .numberInput:focus {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 1.5px rgba(10, 132, 255, 0.6);
+}
+
+:global(html.dark) .separator,
+:global(.dark) .separator {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+:global(html.dark) .placeholder,
+:global(.dark) .placeholder {
+  color: rgba(255, 255, 255, 0.22);
+}
+
+:global(html.dark) .emptyResult,
+:global(.dark) .emptyResult {
+  color: rgba(255, 255, 255, 0.4);
+}

@@ -1,0 +1,249 @@
+/* ============================================================================
+/* IEEE 25-Bus Network  --  Contingency Definitions (.con)
+/* ----------------------------------------------------------------------------
+/* TARA-format contingency file, self-contained (no %include directives).
+/* Companion case : ieee_25bus.rawx   (IEEE 25 BUS NETWORK, N-1-1 demonstration)
+/* Requires       : ieee_25bus.sub  (subsystems)   ieee_25bus.mon  (monitors)
+/*
+/* Sections
+/*   LineOutage   33  single AC line outages           (N-1)
+/*   XfmrOutage    6  single transformer outages       (N-1)
+/*   GenOutage     7  generator / plant trips          (N-1)
+/*   ShuntOutage   1  switched-shunt outage            (N-1)
+/*   BusOutage     4  bus-section outages              (N-1)
+/*   Multi         6  common-mode / N-1-1 pairs        (N-1-1 / N-2)
+/* ============================================================================
+
+/* Generation lost in a contingency is redispatched across subsystem 'Dispatch'
+/* (areas MIDAREA + NORTH), defined in ieee_25bus.sub.
+Default Dispatch
+  Subsystem 'Dispatch'
+End
+
+/* === SINGLE AC LINE OUTAGES (N-1) =========================================
+contingency "L-101-102-1" / 101 COAL-A 138 to 102 COAL-B 138 ckt 1
+   open branch from bus 101 to bus 102 ckt 1
+end
+contingency "L-101-103-1" / 101 COAL-A 138 to 103 WESTIE-1 138 ckt 1
+   open branch from bus 101 to bus 103 ckt 1
+end
+contingency "L-101-105-1" / 101 COAL-A 138 to 105 ANNELOAD 138 ckt 1
+   open branch from bus 101 to bus 105 ckt 1
+end
+contingency "L-102-104-1" / 102 COAL-B 138 to 104 MARYLOAD 138 ckt 1
+   open branch from bus 102 to bus 104 ckt 1
+end
+contingency "L-102-106-1" / 102 COAL-B 138 to 106 REACTOR 138 ckt 1
+   open branch from bus 102 to bus 106 ckt 1
+end
+contingency "L-103-109-1" / 103 WESTIE-1 138 to 109 MIDTIE-1 138 ckt 1
+   open branch from bus 103 to bus 109 ckt 1
+end
+contingency "L-104-109-1" / 104 MARYLOAD 138 to 109 MIDTIE-1 138 ckt 1
+   open branch from bus 104 to bus 109 ckt 1
+end
+contingency "L-105-110-1" / 105 ANNELOAD 138 to 110 EASTIE-1 138 ckt 1
+   open branch from bus 105 to bus 110 ckt 1
+end
+contingency "L-106-110-1" / 106 REACTOR 138 to 110 EASTIE-1 138 ckt 1
+   open branch from bus 106 to bus 110 ckt 1
+end
+contingency "L-107-108-1" / 107 MIDOIL 138 to 108 ERIKLOAD 138 ckt 1
+   open branch from bus 107 to bus 108 ckt 1
+end
+contingency "L-108-109-1" / 108 ERIKLOAD 138 to 109 MIDTIE-1 138 ckt 1
+   open branch from bus 108 to bus 109 ckt 1
+end
+contingency "L-108-110-1" / 108 ERIKLOAD 138 to 110 EASTIE-1 138 ckt 1
+   open branch from bus 108 to bus 110 ckt 1
+end
+contingency "L-211-213-1" / 211 MIDTIE-2 230 to 213 BIGOIL 230 ckt 1
+   open branch from bus 211 to bus 213 ckt 1
+end
+contingency "L-211-214-1" / 211 MIDTIE-2 230 to 214 CONDENS 230 ckt 1
+   open branch from bus 211 to bus 214 ckt 1
+end
+contingency "L-212-213-1" / 212 EASTIE-2 230 to 213 BIGOIL 230 ckt 1
+   open branch from bus 212 to bus 213 ckt 1
+end
+contingency "L-212-223-1" / 212 EASTIE-2 230 to 223 BIGCOAL 230 ckt 1
+   open branch from bus 212 to bus 223 ckt 1
+end
+contingency "L-213-223-1" / 213 BIGOIL 230 to 223 BIGCOAL 230 ckt 1
+   open branch from bus 213 to bus 223 ckt 1
+end
+contingency "L-215-216-1" / 215 MIDCOALP 230 to 216 MIDCOAL 230 ckt 1
+   open branch from bus 215 to bus 216 ckt 1
+end
+contingency "L-215-221-1" / 215 MIDCOALP 230 to 221 NUKE-B 230 ckt 1
+   open branch from bus 215 to bus 221 ckt 1
+end
+contingency "L-215-221-2" / 215 MIDCOALP 230 to 221 NUKE-B 230 ckt 2
+   open branch from bus 215 to bus 221 ckt 2
+end
+contingency "L-215-224-1" / 215 MIDCOALP 230 to 224 WESTIE-2 230 ckt 1
+   open branch from bus 215 to bus 224 ckt 1
+end
+contingency "L-216-217-1" / 216 MIDCOAL 230 to 217 NOLOAD 230 ckt 1
+   open branch from bus 216 to bus 217 ckt 1
+end
+contingency "L-216-219-1" / 216 MIDCOAL 230 to 219 VIKING 230 ckt 1
+   open branch from bus 216 to bus 219 ckt 1
+end
+contingency "L-216-225-1" / 216 MIDCOAL 230 to 225 ADDON 230 ckt 1
+   open branch from bus 216 to bus 225 ckt 1
+end
+contingency "L-217-218-1" / 217 NOLOAD 230 to 218 NUKE-A 230 ckt 1
+   open branch from bus 217 to bus 218 ckt 1
+end
+contingency "L-217-222-1" / 217 NOLOAD 230 to 222 HYDRO 230 ckt 1
+   open branch from bus 217 to bus 222 ckt 1
+end
+contingency "L-218-221-1" / 218 NUKE-A 230 to 221 NUKE-B 230 ckt 1
+   open branch from bus 218 to bus 221 ckt 1
+end
+contingency "L-218-221-2" / 218 NUKE-A 230 to 221 NUKE-B 230 ckt 2
+   open branch from bus 218 to bus 221 ckt 2
+end
+contingency "L-219-220-1" / 219 VIKING 230 to 220 CARIOCA 230 ckt 1
+   open branch from bus 219 to bus 220 ckt 1
+end
+contingency "L-219-220-2" / 219 VIKING 230 to 220 CARIOCA 230 ckt 2
+   open branch from bus 219 to bus 220 ckt 2
+end
+contingency "L-220-223-1" / 220 CARIOCA 230 to 223 BIGCOAL 230 ckt 1
+   open branch from bus 220 to bus 223 ckt 1
+end
+contingency "L-220-223-2" / 220 CARIOCA 230 to 223 BIGCOAL 230 ckt 2
+   open branch from bus 220 to bus 223 ckt 2
+end
+contingency "L-221-222-1" / 221 NUKE-B 230 to 222 HYDRO 230 ckt 1
+   open branch from bus 221 to bus 222 ckt 1
+end
+
+/* === SINGLE TRANSFORMER OUTAGES (N-1) =====================================
+contingency "T-103-224-1" / 103 WESTIE-1 138 to 224 WESTIE-2 230 ckt 1 transformer
+   open branch from bus 103 to bus 224 ckt 1
+end
+contingency "T-109-211-1" / 109 MIDTIE-1 138 to 211 MIDTIE-2 230 ckt 1 transformer
+   open branch from bus 109 to bus 211 ckt 1
+end
+contingency "T-109-212-1" / 109 MIDTIE-1 138 to 212 EASTIE-2 230 ckt 1 transformer
+   open branch from bus 109 to bus 212 ckt 1
+end
+contingency "T-110-211-1" / 110 EASTIE-1 138 to 211 MIDTIE-2 230 ckt 1 transformer
+   open branch from bus 110 to bus 211 ckt 1
+end
+contingency "T-110-212-1" / 110 EASTIE-1 138 to 212 EASTIE-2 230 ckt 1 transformer
+   open branch from bus 110 to bus 212 ckt 1
+end
+contingency "T-225-214-1" / 225 ADDON 230 to 214 CONDENS 230 ckt 1 transformer
+   open branch from bus 225 to bus 214 ckt 1
+end
+
+/* === GENERATOR / PLANT OUTAGES (N-1) ======================================
+contingency "G-218-NUKE-A" / NUKE-A 230 - 400 MW nuclear unit trip
+   remove machine 1 from bus 218
+end
+contingency "G-221-NUKE-B" / NUKE-B 230 - 400 MW nuclear unit trip
+   remove machine 1 from bus 221
+end
+contingency "G-216-MIDCOAL" / MIDCOAL 230 - 155 MW coal unit trip
+   remove machine 1 from bus 216
+end
+contingency "G-213-BIGOIL" / BIGOIL 230 - full plant trip, 4 units
+   remove machine 1 from bus 213
+   remove machine 2 from bus 213
+   remove machine 3 from bus 213
+   remove machine 4 from bus 213
+end
+contingency "G-223-BIGCOAL" / BIGCOAL 230 - full plant trip, 4 units
+   remove machine 1 from bus 223
+   remove machine 2 from bus 223
+   remove machine 3 from bus 223
+   remove machine 4 from bus 223
+end
+contingency "G-222-HYDRO" / HYDRO 230 - full plant trip, 10 units
+   remove machine 1 from bus 222
+   remove machine 2 from bus 222
+   remove machine 3 from bus 222
+   remove machine 4 from bus 222
+   remove machine 5 from bus 222
+   remove machine 6 from bus 222
+   remove machine 7 from bus 222
+   remove machine 8 from bus 222
+   remove machine 9 from bus 222
+   remove machine A from bus 222
+end
+contingency "G-107-MIDOIL" / MIDOIL 138 - full plant trip, 3 units
+   remove machine 1 from bus 107
+   remove machine 2 from bus 107
+   remove machine 3 from bus 107
+end
+
+/* === SHUNT OUTAGES (N-1) ==================================================
+contingency "SH-106-SWSHUNT" / REACTOR 138 - switched shunt out
+   remove SWShunt from bus 106
+end
+/* Note: the fixed shunt at bus 106 cannot be a contingency element - the v1
+/* .con grammar supports REMOVE MACHINE and REMOVE SWSHUNT only.
+
+/* === BUS-SECTION OUTAGES (N-1) ============================================
+/* A bus outage is modelled by opening every branch terminating on the bus.
+Contingency_type
+	set values 'BusOutage'
+End
+contingency "BUS-109-MIDTIE-1" / MIDTIE-1 138 bus section
+   open branch from bus 103 to bus 109 ckt 1
+   open branch from bus 104 to bus 109 ckt 1
+   open branch from bus 108 to bus 109 ckt 1
+   open branch from bus 109 to bus 211 ckt 1
+   open branch from bus 109 to bus 212 ckt 1
+end
+contingency "BUS-213-BIGOIL" / BIGOIL 230 bus section
+   open branch from bus 211 to bus 213 ckt 1
+   open branch from bus 212 to bus 213 ckt 1
+   open branch from bus 213 to bus 223 ckt 1
+end
+contingency "BUS-216-MIDCOAL" / MIDCOAL 230 bus section
+   open branch from bus 215 to bus 216 ckt 1
+   open branch from bus 216 to bus 217 ckt 1
+   open branch from bus 216 to bus 219 ckt 1
+   open branch from bus 216 to bus 225 ckt 1
+end
+contingency "BUS-221-NUKE-B" / NUKE-B 230 bus section
+   open branch from bus 215 to bus 221 ckt 1
+   open branch from bus 215 to bus 221 ckt 2
+   open branch from bus 218 to bus 221 ckt 1
+   open branch from bus 218 to bus 221 ckt 2
+   open branch from bus 221 to bus 222 ckt 1
+end
+
+/* === COMMON-MODE / N-1-1 MULTI-ELEMENT CONTINGENCIES ======================
+/* Double-circuit towers and paired-element events for N-1-1 demonstration.
+contingency "D-215-221-DBLCKT" / MIDCOALP-NUKE-B 230 double-circuit tower
+   open branch from bus 215 to bus 221 ckt 1
+   open branch from bus 215 to bus 221 ckt 2
+end
+contingency "D-218-221-DBLCKT" / NUKE-A-NUKE-B 230 double-circuit tower
+   open branch from bus 218 to bus 221 ckt 1
+   open branch from bus 218 to bus 221 ckt 2
+end
+contingency "D-219-220-DBLCKT" / VIKING-CARIOCA 230 double-circuit tower
+   open branch from bus 219 to bus 220 ckt 1
+   open branch from bus 219 to bus 220 ckt 2
+end
+contingency "D-220-223-DBLCKT" / CARIOCA-BIGCOAL 230 double-circuit tower
+   open branch from bus 220 to bus 223 ckt 1
+   open branch from bus 220 to bus 223 ckt 2
+end
+contingency "D-211-DBLXFMR" / MIDTIE-2 230 transformer pair, 109 and 110 feeds
+   open branch from bus 109 to bus 211 ckt 1
+   open branch from bus 110 to bus 211 ckt 1
+end
+contingency "D-LINE-PLUS-XFMR" / BIGCOAL line plus MIDTIE-2 transformer N-1-1 pair
+   open branch from bus 213 to bus 223 ckt 1
+   open branch from bus 109 to bus 211 ckt 1
+end
+
+end

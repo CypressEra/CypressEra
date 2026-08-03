@@ -1,0 +1,93 @@
+http://:80 {
+	# Fallback for IP-based access before DNS is configured
+
+	# Health & heartbeat endpoints (no /api prefix on backend)
+	handle /health {
+		reverse_proxy api-server:8080
+	}
+	handle /heartbeat {
+		reverse_proxy api-server:8080
+	}
+	handle /ws {
+		reverse_proxy api-server:8080
+	}
+
+	# API Server — preserve full path so /api/v1/* reaches the backend correctly
+	handle /api/* {
+		reverse_proxy api-server:8080
+	}
+
+	# Static file serving (models, knowledge, results, sessions)
+	handle /models/* {
+		uri strip_prefix /models
+		reverse_proxy api-server:8080
+	}
+	handle /knowledge/* {
+		uri strip_prefix /knowledge
+		reverse_proxy api-server:8080
+	}
+	handle /results/* {
+		uri strip_prefix /results
+		reverse_proxy api-server:8080
+	}
+	handle /sessions/* {
+		uri strip_prefix /sessions
+		reverse_proxy api-server:8080
+	}
+
+	# Agent Server — strip /agent prefix (agent server has routes like /health, not /agent/health)
+	handle_path /agent/* {
+		reverse_proxy agent-server:3001
+	}
+
+	# React UI (everything else)
+	handle {
+		reverse_proxy react-ui:3000
+	}
+}
+
+{$DOMAIN} {
+	# Health & heartbeat endpoints (no /api prefix on backend)
+	handle /health {
+		reverse_proxy api-server:8080
+	}
+	handle /heartbeat {
+		reverse_proxy api-server:8080
+	}
+	handle /ws {
+		reverse_proxy api-server:8080
+	}
+
+	# API Server — preserve full path so /api/v1/* reaches the backend correctly
+	handle /api/* {
+		reverse_proxy api-server:8080
+	}
+
+	# Static file serving (models, knowledge, results, sessions)
+	handle /models/* {
+		uri strip_prefix /models
+		reverse_proxy api-server:8080
+	}
+	handle /knowledge/* {
+		uri strip_prefix /knowledge
+		reverse_proxy api-server:8080
+	}
+	handle /results/* {
+		uri strip_prefix /results
+		reverse_proxy api-server:8080
+	}
+	handle /sessions/* {
+		uri strip_prefix /sessions
+		reverse_proxy api-server:8080
+	}
+
+	# Agent Server — strip /agent prefix (agent server has routes like /health, not /agent/health)
+	handle_path /agent/* {
+		reverse_proxy agent-server:3001
+	}
+
+	# React UI (everything else)
+	handle {
+		reverse_proxy react-ui:3000
+	}
+}

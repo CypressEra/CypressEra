@@ -1,0 +1,148 @@
+.network-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  cursor: default;
+}
+
+.network-view .view-content {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.network-view .view-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  overflow: hidden;
+}
+
+.network-view .view-panel.active {
+  display: block;
+}
+
+.network-view .view-tabs {
+  display: inline-flex;
+  gap: 2px;
+  background: var(--bg-secondary);
+  padding: 4px;
+  border-radius: 6px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  margin-bottom: 4px;
+  align-self: flex-start;
+}
+
+.network-view .view-tab {
+  padding: 4px 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+}
+
+.network-view .view-tab:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.network-view .view-tab.active {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+}
+
+/* Dark theme support */
+[data-theme="dark"] .network-view .view-tabs {
+  background: var(--bg-secondary);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .network-view .view-tab {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .network-view .view-tab:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .network-view .view-tab.active {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ */
+/* Network-data loading overlay (shown while a model/session loads)    */
+/* ------------------------------------------------------------------ */
+.network-view .view-content > .network-view__loading {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(1px);
+}
+
+[data-theme="dark"] .network-view .view-content > .network-view__loading {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.network-view__loading-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  min-width: 200px;
+  padding: 22px 28px;
+  border-radius: 10px;
+  background: var(--bg-primary, #ffffff);
+  color: var(--text-primary, #1d1d1f);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  font-size: 13px;
+}
+
+[data-theme="dark"] .network-view__loading-card {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.network-view__spinner {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 3px solid rgba(10, 132, 255, 0.25);
+  border-top-color: #0a84ff;
+  animation: network-view-spin 0.8s linear infinite;
+}
+
+.network-view__loading-text {
+  font-weight: 600;
+}
+
+@keyframes network-view-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .network-view__spinner {
+    animation-duration: 2s;
+  }
+}

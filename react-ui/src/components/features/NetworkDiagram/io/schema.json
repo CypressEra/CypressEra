@@ -1,0 +1,356 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cypressera.ai/schemas/cypressera-diagram-1.0.json",
+  "title": "cypressera.diagram v1.0",
+  "description": "Canonical save format for the CypressEra network diagram plot. Persists positions, connections, layers, and visual style. Does not carry electrical model parameters or operating-point state.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["type", "version", "id", "createdAt", "modifiedAt", "app", "view", "layers", "elements"],
+  "properties": {
+    "$schema":     { "type": "string", "format": "uri" },
+    "type":        { "const": "cypressera.diagram" },
+    "version":     { "type": "string", "pattern": "^\\d+\\.\\d+(\\.\\d+)?$" },
+    "id":          { "$ref": "#/$defs/uuidv7" },
+    "createdAt":   { "type": "string", "format": "date-time" },
+    "modifiedAt":  { "type": "string", "format": "date-time" },
+    "app": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name":    { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "minLength": 1 }
+      }
+    },
+    "title":        { "type": "string" },
+    "description":  { "type": "string" },
+    "tags":         { "type": "array", "items": { "type": "string" } },
+    "modelRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "kind": { "type": "string" },
+        "hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+      }
+    },
+    "view": { "$ref": "#/$defs/transform" },
+    "style": { "type": "object", "additionalProperties": true },
+    "layers": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/layer" }
+    },
+    "elements": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/element" }
+    },
+    "contentHash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "migrations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["from", "to", "at"],
+        "properties": {
+          "from": { "type": "string" },
+          "to":   { "type": "string" },
+          "at":   { "type": "string", "format": "date-time" }
+        }
+      }
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z0-9-]+(\\.[a-z0-9-]+)+(\\.[A-Za-z0-9_-]+)+$"
+      },
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "uuidv7": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "point": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y"],
+      "properties": { "x": { "type": "number" }, "y": { "type": "number" } }
+    },
+    "size": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height"],
+      "properties": {
+        "width":  { "type": "number", "exclusiveMinimum": 0 },
+        "height": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "transform": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scale", "offsetX", "offsetY"],
+      "properties": {
+        "scale":   { "type": "number", "exclusiveMinimum": 0 },
+        "offsetX": { "type": "number" },
+        "offsetY": { "type": "number" }
+      }
+    },
+    "layer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "visible", "zIndex"],
+      "properties": {
+        "id":      { "type": "string", "minLength": 1 },
+        "name":    { "type": "string" },
+        "visible": { "type": "boolean" },
+        "zIndex":  { "type": "integer" }
+      }
+    },
+    "attachFraction": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "lineEndpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["elementId", "attach"],
+      "properties": {
+        "elementId": { "$ref": "#/$defs/uuidv7" },
+        "attach":    { "$ref": "#/$defs/attachFraction" }
+      }
+    },
+    "deviceAttach": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["elementId", "position", "side"],
+      "properties": {
+        "elementId": { "$ref": "#/$defs/uuidv7" },
+        "position":  { "$ref": "#/$defs/attachFraction" },
+        "side":      { "enum": ["above", "below", "left", "right"] }
+      }
+    },
+    "element": {
+      "oneOf": [
+        { "$ref": "#/$defs/busElement" },
+        { "$ref": "#/$defs/lineElement" },
+        { "$ref": "#/$defs/dcLineElement" },
+        { "$ref": "#/$defs/deviceElement" },
+        { "$ref": "#/$defs/annotationElement" },
+        { "$ref": "#/$defs/groupElement" },
+        { "$ref": "#/$defs/reservedElement" }
+      ]
+    },
+    "busElement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "ref", "layer", "position", "geometry"],
+      "properties": {
+        "id":      { "$ref": "#/$defs/uuidv7" },
+        "type":    { "const": "bus" },
+        "layer":   { "type": "string", "minLength": 1 },
+        "visible": { "type": "boolean" },
+        "ref": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["ibus"],
+          "properties": { "ibus": { "type": "integer", "minimum": 1 } }
+        },
+        "position": { "$ref": "#/$defs/point" },
+        "geometry": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["length", "orientation"],
+          "properties": {
+            "length":      { "type": "number", "exclusiveMinimum": 0 },
+            "orientation": { "enum": ["horizontal", "vertical"] }
+          }
+        }
+      }
+    },
+    "lineElement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "ref", "layer", "from", "to", "controlPoints"],
+      "properties": {
+        "id":      { "$ref": "#/$defs/uuidv7" },
+        "type":    { "enum": ["acline", "transformer", "transformer3w"] },
+        "layer":   { "type": "string", "minLength": 1 },
+        "visible": { "type": "boolean" },
+        "ref": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["ibus", "jbus", "ckt"],
+              "properties": {
+                "ibus": { "type": "integer", "minimum": 1 },
+                "jbus": { "type": "integer", "minimum": 1 },
+                "ckt":  { "type": "string", "minLength": 1 }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["ibus", "jbus", "kbus", "ckt"],
+              "properties": {
+                "ibus": { "type": "integer", "minimum": 1 },
+                "jbus": { "type": "integer", "minimum": 1 },
+                "kbus": { "type": "integer", "minimum": 1 },
+                "ckt":  { "type": "string", "minLength": 1 }
+              }
+            }
+          ]
+        },
+        "from":          { "$ref": "#/$defs/lineEndpoint" },
+        "to":            { "$ref": "#/$defs/lineEndpoint" },
+        "controlPoints": { "type": "array", "items": { "$ref": "#/$defs/point" } }
+      }
+    },
+    "dcLineElement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "ref", "layer", "from", "to", "controlPoints"],
+      "properties": {
+        "id":      { "$ref": "#/$defs/uuidv7" },
+        "type":    { "enum": ["two_term_dc", "vsc_dc"] },
+        "layer":   { "type": "string", "minLength": 1 },
+        "visible": { "type": "boolean" },
+        "ref": {
+          "oneOf": [
+            {
+              "description": "Two-terminal DC line: ipi (rectifier-side) and ipr (inverter-side) bus numbers, plus circuit id.",
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["ipi", "ipr", "ckt"],
+              "properties": {
+                "ipi":  { "type": "integer", "minimum": 1 },
+                "ipr":  { "type": "integer", "minimum": 1 },
+                "ckt":  { "type": "string", "minLength": 1 },
+                "name": { "type": "string" }
+              }
+            },
+            {
+              "description": "VSC DC link: ibus1 and ibus2 converter bus numbers, plus disambiguating name.",
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["ibus1", "ibus2", "name"],
+              "properties": {
+                "ibus1": { "type": "integer", "minimum": 1 },
+                "ibus2": { "type": "integer", "minimum": 1 },
+                "name":  { "type": "string", "minLength": 1 }
+              }
+            }
+          ]
+        },
+        "from":          { "$ref": "#/$defs/lineEndpoint" },
+        "to":            { "$ref": "#/$defs/lineEndpoint" },
+        "controlPoints": { "type": "array", "items": { "$ref": "#/$defs/point" } },
+        "polarity":      { "enum": ["rectifier-inverter"] }
+      }
+    },
+    "deviceElement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "ref", "layer", "attach", "mirrored"],
+      "properties": {
+        "id":      { "$ref": "#/$defs/uuidv7" },
+        "type":    { "enum": ["generator", "load", "fixed_shunt", "switched_shunt"] },
+        "layer":   { "type": "string", "minLength": 1 },
+        "visible": { "type": "boolean" },
+        "ref": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["ibus", "id"],
+              "properties": {
+                "ibus": { "type": "integer", "minimum": 1 },
+                "id":   { "type": "string", "minLength": 1 }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["ibus"],
+              "properties": { "ibus": { "type": "integer", "minimum": 1 } }
+            }
+          ]
+        },
+        "attach":   { "$ref": "#/$defs/deviceAttach" },
+        "mirrored": { "type": "boolean" }
+      }
+    },
+    "annotationElement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "layer", "position", "text"],
+      "properties": {
+        "id":      { "$ref": "#/$defs/uuidv7" },
+        "type":    { "const": "annotation" },
+        "layer":   { "type": "string", "minLength": 1 },
+        "visible": { "type": "boolean" },
+        "position":   { "$ref": "#/$defs/point" },
+        "text":       { "type": "string" },
+        "fontSize":   { "type": "number", "exclusiveMinimum": 0 },
+        "fontWeight": { "enum": ["normal", "bold"] },
+        "textAlign":  { "enum": ["left", "center", "right"] },
+        "color":      { "type": "string" },
+        "rotation":   { "type": "number" },
+        "leader": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "to": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["elementId"],
+              "properties": { "elementId": { "$ref": "#/$defs/uuidv7" } }
+            },
+            "points": { "type": "array", "items": { "$ref": "#/$defs/point" } }
+          }
+        }
+      }
+    },
+    "groupElement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "layer", "position", "size", "children"],
+      "properties": {
+        "id":      { "$ref": "#/$defs/uuidv7" },
+        "type":    { "const": "group" },
+        "layer":   { "type": "string", "minLength": 1 },
+        "visible": { "type": "boolean" },
+        "position":  { "$ref": "#/$defs/point" },
+        "size":      { "$ref": "#/$defs/size" },
+        "label":     { "type": "string" },
+        "collapsed": { "type": "boolean" },
+        "style": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "fill":       { "type": "string" },
+            "stroke":     { "type": "string" },
+            "strokeDash": { "type": "array", "items": { "type": "number" } }
+          }
+        },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/uuidv7" }
+        }
+      }
+    },
+    "reservedElement": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id", "type", "layer"],
+      "properties": {
+        "id":    { "$ref": "#/$defs/uuidv7" },
+        "type":  { "enum": ["breaker", "disconnect", "capacitor", "reactor"] },
+        "layer": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

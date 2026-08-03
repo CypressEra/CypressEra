@@ -1,0 +1,30 @@
+{
+  "title": "AI Assistant",
+  "welcomeMessage": "Hello! I'm your AI assistant Chuckle Chuckie. How can I help you with your power flow analysis today?",
+  "presetQuestionsLabel": "You can ask",
+  "presetQuestions": [
+    "Which bus has the lowest voltage on the IEEE 25-bus network?",
+    "Run a sample AC contingency analysis on the IEEE 25-bus network"
+  ],
+  "placeholder": "Ask me anything about power flow analysis...",
+  "send": "Send",
+  "typing": "AI is typing...",
+  "useKnowledgeBase": "Use Knowledge Base",
+  "knowledgeBaseButton": "Knowledge",
+  "engineCallingTitle": "Calling Xolution Engine",
+  "engineCallingDefaultDetail": "Executing SDK function",
+  "engineCallingMore": "{{count}} more function calls…",
+  "responses": {
+    "default": "I understand your question about power flow analysis. Let me help you with that. Could you provide more specific details about what you'd like to analyze?",
+    "powerFlow": "Power flow analysis helps determine the steady-state operating conditions of an electrical power system. I can help you understand the results, troubleshoot convergence issues, or explain different calculation methods.",
+    "convergence": "Convergence issues in power flow analysis usually indicate system problems like overloaded lines, voltage violations, or incorrect system data. Let me help you identify and resolve these issues.",
+    "methods": "There are several power flow calculation methods: DC Power Flow (fast, approximate), AC Power Flow (accurate, slower), and Fast Decoupled (balanced approach). Which method are you using?",
+    "results": "Power flow results include bus voltages, line flows, and system losses. I can help you interpret these results and identify any system issues or optimization opportunities."
+  },
+  "errors": {
+    "sendFailed": "Failed to send message. Please try again.",
+    "networkError": "Network error. Please check your connection.",
+    "serverError": "Server error. Please try again later."
+  },
+  "stopGeneration": "Stop"
+}

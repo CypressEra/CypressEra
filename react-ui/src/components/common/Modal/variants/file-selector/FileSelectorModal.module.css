@@ -1,0 +1,637 @@
+/* macOS-style File Selector Modal */
+
+.fileSelector {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #f5f5f7;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  overflow: hidden;
+}
+
+/* Content Wrapper - Sidebar + Main Content */
+.contentWrapper {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Sidebar - macOS Finder style */
+.sidebar {
+  width: 200px;
+  background: #ffffff;
+  border-right: 1px solid #e0e0e0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex-shrink: 0;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #d1d1d6;
+  border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a6;
+}
+
+.sidebarSection {
+  padding: 4px 0px 8px 0px;
+}
+
+.sidebarTitle {
+  font-size: 11px;
+  font-weight: 600;
+  color: #6e6e73;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 6px 12px 4px 0;
+  margin-bottom: 8px;
+  user-select: none;
+  text-align: left;
+}
+
+.sidebarItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: left;
+  transition: background 0.15s ease;
+  border-radius: 6px;
+  margin: 0 8px 0 0;
+  width: calc(100% - 8px);
+}
+
+.sidebarItem:hover {
+  background: rgba(0, 122, 255, 0.08);
+}
+
+.sidebarItemActive {
+  background: rgba(0, 122, 255, 0.15);
+  transition: none;
+}
+
+.sidebarItemActive .sidebarLabel {
+  color: #007AFF;
+  font-weight: 400;
+}
+
+.sidebarIcon {
+  font-size: 16px;
+  width: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sidebarLabel {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Main Content Area */
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px 8px 12px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e5e7;
+  flex-shrink: 0;
+}
+
+.navigationButtons {
+  display: flex;
+  gap: 4px;
+  margin-right: 12px;
+}
+
+.navButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #1d1d1f;
+  transition: background-color 0.15s ease;
+}
+
+.navButton:hover:not(:disabled) {
+  background: #e5e5e7;
+}
+
+.navButton:active:not(:disabled) {
+  background: #d1d1d6;
+}
+
+.navButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.navButton svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.breadcrumb::-webkit-scrollbar {
+  display: none;
+}
+
+.breadcrumbItem {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #1d1d1f;
+  font-size: 13px;
+  font-weight: 400;
+  white-space: nowrap;
+  transition: background-color 0.15s ease;
+}
+
+.breadcrumbItem:hover {
+  background: #e5e5e7;
+}
+
+.breadcrumbIcon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: #86868b;
+}
+
+.breadcrumbSeparator {
+  margin: 0 4px;
+  color: #86868b;
+  font-size: 13px;
+  user-select: none;
+}
+
+/* File List */
+.fileList {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 4px;
+  background: #ffffff;
+}
+
+.fileList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.fileList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.fileList::-webkit-scrollbar-thumb {
+  background: #d1d1d6;
+  border-radius: 4px;
+}
+
+.fileList::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a6;
+}
+
+.fileItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+  position: relative;
+  margin: 1px 0;
+}
+
+.fileItem:hover {
+  background: rgba(0, 122, 255, 0.08);
+}
+
+.fileItem.selected {
+  background: rgba(0, 122, 255, 0.15);
+  color: inherit;
+  border-radius: 4px;
+}
+
+.fileItem.selected:hover {
+  background: rgba(0, 122, 255, 0.15);
+}
+
+.fileItem.selected .fileIcon {
+  filter: none;
+}
+
+.fileItem.selected .fileName {
+  color: #007AFF;
+  font-weight: 400;
+}
+
+.fileItem.selected .fileMeta {
+  color: #86868b;
+}
+
+.fileIcon {
+  font-size: 24px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.fileInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fileName {
+  font-size: 13px;
+  font-weight: 400;
+  color: #1d1d1f;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fileItem.selected .fileName {
+  color: #007AFF;
+  font-weight: 400;
+  transition: none;
+}
+
+.fileMeta {
+  font-size: 11px;
+  color: #86868b;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.fileDate {
+  color: #86868b;
+}
+
+.loading,
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #86868b;
+  font-size: 13px;
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f8f8f8;
+  gap: 12px;
+}
+
+.fileNameInputWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  margin-right: auto;
+}
+
+.fileNameLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: #1d1d1f;
+  margin: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.fileNameInput {
+  flex: 1;
+  min-width: 250px;
+  height: 28px;
+  padding: 4px 10px;
+  border: 1px solid #d1d1d6;
+  border-radius: 4px;
+  font-size: 13px;
+  line-height: 20px;
+  background: #ffffff;
+  color: #1d1d1f;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  box-sizing: border-box;
+}
+
+.fileNameInput:focus {
+  outline: none;
+  border-color: #007aff;
+  box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.15);
+}
+
+.fileNameInput::placeholder {
+  color: #86868b;
+}
+
+.pathDisplay {
+  flex: 1;
+  font-size: 11px;
+  color: #86868b;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.footerButtons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+/* Dark mode support */
+:global(html.dark) .fileSelector {
+  background: #1d1d1f;
+}
+
+:global(html.dark) .sidebar {
+  background: #1e293b;
+  border-right-color: rgba(255, 255, 255, 0.1);
+}
+
+:global(html.dark) .fileSelector {
+  background: #1e293b;
+}
+
+:global(html.dark) .sidebarTitle {
+  color: #86868b;
+}
+
+:global(html.dark) .sidebarItem {
+  color: #f5f5f7;
+}
+
+:global(html.dark) .sidebarItem {
+  color: #f5f5f7;
+}
+
+:global(html.dark) .sidebarItem:hover {
+  background: rgba(0, 122, 255, 0.08);
+}
+
+:global(html.dark) .sidebarItemActive {
+  background: rgba(0, 122, 255, 0.25);
+}
+
+:global(html.dark) .mainContent {
+  background: #1e293b;
+}
+
+:global(html.dark) .toolbar {
+  background: #1e293b;
+  border-bottom-color: #3a3a3c;
+}
+
+:global(html.dark) .navButton {
+  color: #f5f5f7;
+}
+
+:global(html.dark) .navButton:hover:not(:disabled) {
+  background: #3a3a3c;
+}
+
+:global(html.dark) .navButton:active:not(:disabled) {
+  background: #48484a;
+}
+
+:global(html.dark) .breadcrumbItem {
+  color: #f5f5f7;
+}
+
+:global(html.dark) .breadcrumbItem:hover {
+  background: #3a3a3c;
+}
+
+:global(html.dark) .breadcrumbIcon {
+  color: #f5f5f7;
+}
+
+:global(html.dark) .breadcrumbSeparator {
+  color: #86868b;
+}
+
+:global(html.dark) .fileList {
+  background: #1e293b;
+}
+
+:global(html.dark) .fileItem:hover {
+  background: rgba(0, 122, 255, 0.08);
+}
+
+:global(html.dark) .fileName {
+  color: #f5f5f7;
+}
+
+:global(html.dark) .fileMeta {
+  color: #86868b;
+}
+
+:global(html.dark) .loading,
+:global(html.dark) .empty {
+  color: #86868b;
+}
+
+:global(html.dark) .footer {
+  background: #0f172a;
+}
+
+:global(html.dark) .fileNameLabel {
+  color: #f5f5f7;
+}
+
+:global(html.dark) .fileNameInput {
+  background: #1e293b;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #f5f5f7;
+}
+
+:global(html.dark) .fileNameInput:focus {
+  border-color: #007aff;
+  box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
+}
+
+:global(html.dark) .fileNameInput::placeholder {
+  color: #86868b;
+}
+
+:global(html.dark) .pathDisplay {
+  color: #86868b;
+}
+
+@media (prefers-color-scheme: dark) {
+  .fileSelector {
+    background: #1e293b;
+  }
+
+  .sidebar {
+    background: #1e293b;
+    border-right-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .sidebarTitle {
+    color: #86868b;
+  }
+
+  .sidebarItem {
+    color: #f5f5f7;
+  }
+
+  .sidebarItem:hover {
+    background: rgba(0, 122, 255, 0.08);
+  }
+
+  .sidebarItemActive {
+    background: rgba(0, 122, 255, 0.25);
+  }
+
+  .mainContent {
+    background: #1e293b;
+  }
+
+  .toolbar {
+    background: #1e293b;
+    border-bottom-color: #3a3a3c;
+  }
+
+  .navButton {
+    color: #f5f5f7;
+  }
+
+  .navButton:hover:not(:disabled) {
+    background: #3a3a3c;
+  }
+
+  .navButton:active:not(:disabled) {
+    background: #48484a;
+  }
+
+  .breadcrumbItem {
+    color: #f5f5f7;
+  }
+
+  .breadcrumbItem:hover {
+    background: #3a3a3c;
+  }
+
+  .breadcrumbSeparator {
+    color: #86868b;
+  }
+
+  .fileList {
+    background: #1e293b;
+  }
+
+  .fileItem:hover {
+    background: rgba(0, 122, 255, 0.08);
+  }
+
+  .fileName {
+    color: #f5f5f7;
+  }
+
+  .fileMeta {
+    color: #86868b;
+  }
+
+  .loading,
+  .empty {
+    color: #86868b;
+  }
+
+  .footer {
+    background: #0f172a;
+  }
+
+  .fileNameLabel {
+    color: #f5f5f7;
+  }
+
+  .fileNameInput {
+    background: #1e293b;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #f5f5f7;
+  }
+
+  .fileNameInput:focus {
+    border-color: #007aff;
+    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
+  }
+
+  .fileNameInput::placeholder {
+    color: #86868b;
+  }
+
+  .pathDisplay {
+    color: #86868b;
+  }
+}
+

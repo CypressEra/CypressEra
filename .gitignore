@@ -1,0 +1,24 @@
+# Secrets and local configuration — never commit
+.env
+.env.local
+*.pem
+*.key
+
+# Extracted flow-solver binary (fetch with scripts/get-solver.sh)
+/flow-solver/
+
+# Runtime data
+user-data/
+logs/
+*.log
+
+# Dependencies and build outputs
+node_modules/
+dist/
+build/
+
+# Local overrides
+docker-compose.override.yml
+
+# OS noise
+.DS_Store

@@ -1,0 +1,59 @@
+.resizable-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: visible;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.resizable-container.resizing {
+  transition: none;
+}
+
+.horizontal-resizer {
+  position: absolute;
+  top: 0;
+  width: 12px;
+  height: 100%;
+  cursor: ew-resize;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.horizontal-resizer-left {
+  left: -12px;
+}
+
+.horizontal-resizer-right {
+  right: -12px;
+}
+
+.horizontal-resizer-line {
+  width: 2px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+
+.horizontal-resizer:hover .horizontal-resizer-line,
+.horizontal-resizer.active .horizontal-resizer-line {
+  background: rgba(0, 122, 255, 0.6);
+  width: 3px;
+}
+
+/* Hide scrollbars in child components during transition */
+.resizable-container.transitioning * {
+  overflow: hidden !important;
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE/Edge */
+}
+
+.resizable-container.transitioning *::-webkit-scrollbar {
+  display: none !important; /* Chrome/Safari */
+}

@@ -1,0 +1,11 @@
+{
+  "fileSelection": "Please select a file and create a session first",
+  "sessionRequired": "Please create a session and upload a file first",
+  "invalidFile": "Please select a valid .rawx file",
+  "createSessionFailed": "Failed to create session",
+  "uploadFailed": "Failed to upload file",
+  "calculationFailed": "Failed to run power flow calculation",
+  "noResults": "No results provided in response",
+  "serverConnection": "Failed to connect to server",
+  "serverStatus": "Server returned status: {{status}}"
+}

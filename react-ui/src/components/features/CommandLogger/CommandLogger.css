@@ -1,0 +1,90 @@
+.command-logger {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: 'SF Mono', 'Monaco', 'Menlo', 'Consolas', monospace;
+  font-size: 12px;
+}
+
+.logger-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 6px;
+}
+
+.log-entry {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-bottom: 2px;
+  transition: background 0.15s ease;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.log-entry:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.log-timestamp {
+  color: var(--text-secondary, #888);
+  font-weight: 500;
+  min-width: 60px;
+  font-variant-numeric: tabular-nums;
+}
+
+.log-icon {
+  font-weight: bold;
+  font-size: 12px;
+  min-width: 16px;
+  text-align: center;
+}
+
+.log-message {
+  color: var(--text-primary, #333);
+  flex: 1;
+}
+
+/* Log level colors */
+.log-info .log-icon {
+  color: #007AFF;
+}
+
+.log-success .log-icon {
+  color: #34C759;
+}
+
+.log-warning .log-icon {
+  color: #FF9500;
+}
+
+.log-error .log-icon {
+  color: #FF3B30;
+}
+
+.log-error .log-message {
+  color: #FF3B30;
+}
+
+/* Custom Scrollbar */
+.logger-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.logger-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.logger-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.logger-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}

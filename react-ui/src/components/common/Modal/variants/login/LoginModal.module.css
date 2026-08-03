@@ -1,0 +1,587 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px 18px 16px;
+  background: transparent;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.heading {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: rgba(0, 0, 0, 0.86);
+}
+
+.subheading {
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.6);
+  max-width: 360px;
+}
+
+::global(html.dark) .heading,
+::global(.dark) .heading {
+  color: rgba(255, 255, 255, 0.96);
+}
+
+::global(html.dark) .subheading,
+::global(.dark) .subheading {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hint {
+  font-size: 13px;
+  line-height: 1.4;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+::global(html.dark) .hint,
+::global(.dark) .hint {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.78);
+}
+
+::global(html.dark) .label,
+::global(.dark) .label {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.input {
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 8px 10px;
+  font-size: 13px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: rgba(0, 122, 255, 0.7);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
+}
+
+::global(html.dark) .input,
+::global(.dark) .input {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(2, 6, 23, 0.65);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+::global(html.dark) .input:focus,
+::global(.dark) .input:focus {
+  border-color: rgba(100, 210, 255, 0.65);
+  box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.22);
+}
+
+.error {
+  font-size: 12px;
+  color: #c0291a;
+}
+
+::global(html.dark) .error,
+::global(.dark) .error {
+  color: #ff6b5f;
+}
+
+.errorMessage {
+  padding: 8px 10px;
+  background: rgba(255, 59, 48, 0.05);
+  border-radius: 6px;
+  font-size: 13px;
+  color: rgba(255, 59, 48, 0.9);
+  line-height: 1.4;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.infoMessage {
+  padding: 8px 10px;
+  background: rgba(52, 199, 89, 0.05);
+  border-radius: 6px;
+  font-size: 13px;
+  color: rgba(52, 199, 89, 0.9);
+  line-height: 1.4;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+::global(html.dark) .errorMessage {
+  background: rgba(255, 59, 48, 0.08);
+  color: rgba(255, 107, 95, 0.95);
+}
+
+::global(html.dark) .infoMessage {
+  background: rgba(52, 199, 89, 0.08);
+  color: rgba(88, 214, 125, 0.95);
+}
+
+.divider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::global(html.dark) .divider::before,
+::global(html.dark) .divider::after {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.dividerText {
+  padding: 0 12px;
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: 500;
+}
+
+::global(html.dark) .dividerText {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.googleButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+  transition: background-color 0.1s ease, border-color 0.1s ease, box-shadow 0.1s ease;
+}
+
+.googleButton:hover {
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.googleButton:active {
+  background: rgba(245, 245, 245, 1);
+  box-shadow: none;
+}
+
+.googleButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.googleIcon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.googleButtonText {
+  flex: 1;
+}
+
+::global(html.dark) .googleButton {
+  background: rgba(2, 6, 23, 0.75);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+::global(html.dark) .googleButton:hover {
+  background: rgba(2, 6, 23, 0.85);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+::global(html.dark) .googleButton:active {
+  background: rgba(2, 6, 23, 0.95);
+  box-shadow: none;
+}
+
+.switchRow {
+  display: flex;
+  justify-content: center;
+  padding-top: 4px;
+}
+
+.switchText {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+::global(html.dark) .switchText {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.switchLink {
+  background: none;
+  border: none;
+  padding: 2px 4px;
+  margin: -2px -4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(0, 122, 255, 0.85);
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.1s ease;
+  text-decoration: none;
+  position: relative;
+  z-index: 1;
+}
+
+.switchLink:disabled {
+  color: rgba(0, 0, 0, 0.35);
+  cursor: not-allowed;
+  background: none;
+  box-shadow: none;
+}
+
+.switchLink:hover {
+  background-color: rgba(0, 122, 255, 0.12);
+  color: rgba(0, 122, 255, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.switchLink:active {
+  background-color: rgba(0, 122, 255, 0.18);
+  box-shadow: none;
+}
+
+::global(html.dark) .switchLink {
+  color: rgba(94, 196, 255, 0.85);
+}
+
+::global(html.dark) .switchLink:disabled,
+::global(.dark) .switchLink:disabled {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+::global(html.dark) .switchLink:hover {
+  background-color: rgba(94, 196, 255, 0.18);
+  color: rgba(94, 196, 255, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+::global(html.dark) .switchLink:active {
+  background-color: rgba(94, 196, 255, 0.25);
+  box-shadow: none;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.submitButton {
+  height: auto !important;
+  min-height: unset !important;
+}
+
+/* Passcode verification section */
+.passcodeSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 8px 0;
+}
+
+.passcodeHint {
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
+
+.passcodeHint strong {
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+}
+
+::global(html.dark) .passcodeHint {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+::global(html.dark) .passcodeHint strong {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.passcodeContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.passcodeInput {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: text;
+  z-index: 10;
+}
+
+.passcodeBoxes {
+  display: flex;
+  gap: 8px;
+}
+
+.passcodeBox {
+  width: 44px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1.5px solid rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
+  color: rgba(0, 0, 0, 0.85);
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.passcodeBoxActive {
+  border-color: rgba(0, 122, 255, 0.7);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15), 0 1px 3px rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 1);
+}
+
+.resendRow {
+  margin-top: 0px;
+  text-align: center;
+}
+
+.resendText {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.resendLink {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(0, 122, 255, 0.85);
+  cursor: pointer;
+  transition: color 0.1s ease;
+}
+
+.resendLink:hover {
+  color: rgba(0, 122, 255, 1);
+}
+
+.resendLink:disabled {
+  color: rgba(0, 0, 0, 0.35);
+  cursor: not-allowed;
+}
+
+::global(html.dark) .resendText,
+::global(.dark) .resendText {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+::global(html.dark) .resendLink,
+::global(.dark) .resendLink {
+  color: rgba(94, 196, 255, 0.85);
+}
+
+::global(html.dark) .resendLink:hover,
+::global(.dark) .resendLink:hover {
+  color: rgba(94, 196, 255, 1);
+}
+
+::global(html.dark) .resendLink:disabled,
+::global(.dark) .resendLink:disabled {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+::global(html.dark) .passcodeBox {
+  background: rgba(30, 35, 50, 0.85);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+::global(html.dark) .passcodeBoxActive {
+  border-color: rgba(100, 210, 255, 0.7);
+  box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.25), 0 1px 3px rgba(0, 0, 0, 0.25);
+  background: rgba(35, 40, 55, 0.95);
+}
+
+/* Forgot password styles */
+.forgotHint {
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.6);
+  margin-bottom: 4px;
+}
+
+::global(html.dark) .forgotHint,
+::global(.dark) .forgotHint {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.forgotRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+
+.forgotLink {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 12px;
+  color: rgba(0, 122, 255, 0.85);
+  cursor: pointer;
+  transition: color 0.1s ease;
+}
+
+.forgotLink:hover {
+  color: rgba(0, 122, 255, 1);
+}
+
+.forgotLink:active {
+  color: rgba(0, 100, 200, 1);
+}
+
+::global(html.dark) .forgotLink,
+::global(.dark) .forgotLink {
+  color: rgba(94, 196, 255, 0.85);
+}
+
+::global(html.dark) .forgotLink:hover,
+::global(.dark) .forgotLink:hover {
+  color: rgba(94, 196, 255, 1);
+}
+
+::global(html.dark) .forgotLink:active,
+::global(.dark) .forgotLink:active {
+  color: rgba(70, 170, 230, 1);
+}
+
+/* Password input with toggle */
+.passwordInputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordInput {
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 8px 36px 8px 10px;
+  font-size: 13px;
+  outline: none;
+}
+
+.passwordInput:focus {
+  border-color: rgba(0, 122, 255, 0.7);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
+}
+
+:::global(html.dark) .passwordInput,
+:::global(.dark) .passwordInput {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(2, 6, 23, 0.65);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+:::global(html.dark) .passwordInput:focus,
+:::global(.dark) .passwordInput:focus {
+  border-color: rgba(100, 210, 255, 0.65);
+  box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.22);
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.passwordToggle:hover {
+  color: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.passwordToggle:active {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.passwordToggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+:::global(html.dark) .passwordToggle,
+:::global(.dark) .passwordToggle {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+:::global(html.dark) .passwordToggle:hover,
+:::global(.dark) .passwordToggle:hover {
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+:::global(html.dark) .passwordToggle:active,
+:::global(.dark) .passwordToggle:active {
+  background: rgba(255, 255, 255, 0.12);
+}

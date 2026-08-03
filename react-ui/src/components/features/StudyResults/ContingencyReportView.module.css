@@ -1,0 +1,91 @@
+.report {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* One toolbar row: segmented tabs + severity badges on the left, filter /
+   export / details on the right. Wraps rather than clips when narrow. */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+/* Tab label content inside the shared pill Tabs: title + count pill. */
+.tabLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tabCount {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--bg-secondary, rgba(120, 120, 128, 0.12));
+  border-radius: 8px;
+  padding: 1px 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.toolbarSpacer {
+  flex: 1;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.filterInput {
+  width: 170px;
+  font-size: 12px;
+  padding: 4px 8px;
+  border: 1px solid var(--border-secondary, rgba(120, 120, 128, 0.3));
+  border-radius: 6px;
+  background: var(--bg-primary, #fff);
+  color: var(--text-primary);
+}
+
+.toolBtn {
+  font-size: 12px;
+  padding: 4px 10px;
+  border: 1px solid var(--border-secondary, rgba(120, 120, 128, 0.3));
+  border-radius: 6px;
+  background: var(--bg-tertiary, #f1f1f3);
+  color: var(--text-primary);
+  white-space: nowrap;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.toolBtn:hover {
+  background: var(--bg-secondary, #e8e8ea);
+}
+
+.toolBtnActive {
+  background: var(--bg-secondary, #e8e8ea);
+}
+
+.noMatch {
+  padding: 16px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.clean {
+  font-size: 12px;
+  color: #34c759;
+  padding: 16px;
+  text-align: center;
+}

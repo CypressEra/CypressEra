@@ -1,0 +1,11 @@
+{
+  "fileSelection": "Por favor seleccione un archivo y cree una sesión primero",
+  "sessionRequired": "Por favor cree una sesión y suba un archivo primero",
+  "invalidFile": "Por favor seleccione un archivo .rawx válido",
+  "createSessionFailed": "Error al crear la sesión",
+  "uploadFailed": "Error al subir el archivo",
+  "calculationFailed": "Error al ejecutar el cálculo de flujo de potencia",
+  "noResults": "No se proporcionaron resultados en la respuesta",
+  "serverConnection": "Error al conectar con el servidor",
+  "serverStatus": "El servidor devolvió el estado: {{status}}"
+}

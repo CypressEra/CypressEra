@@ -1,0 +1,80 @@
+{
+  "title": "AC Power Flow Settings",
+  "groups": {
+    "convergence": "Convergence",
+    "initialization": "Initialization",
+    "control": "Control",
+    "solutionOptions": "Solution Options"
+  },
+  "fields": {
+    "tolerance": {
+      "label": "Convergence Tolerance",
+      "description": "Max power mismatch (p.u.) for convergence. Smaller = more precise. Leave empty to use the model's value or the solver default.",
+      "placeholder": "e.g. 1e-6"
+    },
+    "max_iterations": {
+      "label": "Max Iterations",
+      "description": "Max Newton-Raphson iterations per solve.",
+      "placeholder": "e.g. 100"
+    },
+    "flat_start": {
+      "label": "Flat Start",
+      "description": "Initialize all voltages to 1.0∠0°."
+    },
+    "max_outerloop_iterations": {
+      "label": "Max Outerloop Iterations",
+      "description": "Max iterations for reactive power and voltage control loop.",
+      "placeholder": "e.g. 20"
+    },
+    "control_tolerance": {
+      "label": "Q-Limit Tolerance",
+      "description": "Acceptable Q-limit violation margin.",
+      "unit": "MVAr",
+      "placeholder": "e.g. 0.1"
+    },
+    "tap_adjustment": {
+      "label": "Tap Adjustment",
+      "description": "Controls how transformer tap ratios are adjusted during the outerloop.",
+      "options": {
+        "locked": "Locked",
+        "stepping": "Stepping",
+        "direct": "Direct"
+      }
+    },
+    "phase_shift_adjustment": {
+      "label": "Phase Shift Adjustment",
+      "description": "Enable automatic control of phase-shifting transformers."
+    },
+    "dc_tap_adjustment": {
+      "label": "DC Tap Adjustment",
+      "description": "Enable tap adjustment for classic 2-terminal DC lines."
+    },
+    "switched_shunt_adjustment": {
+      "label": "Switched Shunt Adjustment",
+      "description": "Controls which switched shunts are allowed to adjust during the solve.",
+      "options": {
+        "lock_all": "Lock All",
+        "enable_all": "Enable All",
+        "continuous_only": "Continuous Only"
+      }
+    },
+    "area_interchange_adjustment": {
+      "label": "Area Interchange Adjustment",
+      "description": "Adjusts each area's swing generator to meet its scheduled net interchange. Disabled by default.",
+      "options": {
+        "disabled": "Disabled",
+        "tie_lines_only": "Tie Lines Only",
+        "tie_lines_and_loads": "Tie Lines And Loads"
+      }
+    }
+  },
+  "buttons": {
+    "resetToDefaults": "Reset to Defaults",
+    "close": "Apply"
+  },
+  "validation": {
+    "positiveNumber": "Must be a positive number",
+    "positiveInteger": "Must be a positive integer",
+    "invalidNumber": "Invalid number"
+  }
+}

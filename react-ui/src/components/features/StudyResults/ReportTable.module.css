@@ -1,0 +1,87 @@
+/* The scroll (both axes) lives here — the table's own region. */
+.wrap {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  border: 1px solid var(--border-secondary, rgba(120, 120, 128, 0.25));
+  border-radius: 8px;
+}
+
+/* Fixed layout + fixed row height: cell widths come from the colgroup, so the
+   virtual window never jitters column widths while scrolling; long labels
+   ellipsize (cells carry title tooltips). */
+.table {
+  width: 100%;
+  min-width: 760px;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+/* Opaque header so scrolled rows never show through the sticky row. */
+.th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  text-align: left;
+  padding: 7px 10px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--bg-tertiary, #f1f1f3);
+  border-bottom: 1px solid var(--border-secondary, rgba(120, 120, 128, 0.35));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: default;
+}
+
+.thNumeric {
+  text-align: right;
+}
+
+.sortArrow {
+  font-size: 9px;
+  color: var(--text-secondary);
+}
+
+/* Height must match ROW_HEIGHT in ReportTable.tsx — the virtual window is
+   computed from it. */
+.td {
+  height: 28px;
+  box-sizing: border-box;
+  padding: 0 10px;
+  vertical-align: middle;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tdNumeric {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Finder list-view idiom: alternating stripes (index-based, so the parity
+   stays put while the virtual window moves), hover, and selection highlight
+   — selection wins, so it is declared last. */
+.rowStripe .td {
+  background: var(--bg-secondary, rgba(120, 120, 128, 0.06));
+}
+
+.table tbody tr:hover .td {
+  background: var(--hover-bg, rgba(120, 120, 128, 0.1));
+}
+
+.rowSelected .td,
+.table tbody tr.rowSelected:hover .td {
+  background: var(--selection-bg-subtle, rgba(0, 122, 255, 0.14));
+  color: var(--text-primary);
+}
+
+/* Virtual-window spacers: pure height, no visuals. */
+.spacer {
+  padding: 0;
+  border: none;
+  background: transparent;
+}

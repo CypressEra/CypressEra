@@ -1,0 +1,314 @@
+/* macOS-inspired Bus Selector Modal */
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+}
+
+.searchContainer {
+  flex-shrink: 0;
+  position: relative;
+  margin-bottom: 6px;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 6px 12px 6px 30px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  background: rgba(0, 0, 0, 0.06);
+  color: inherit;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.searchInput::placeholder {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.searchInput:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.searchInput:focus {
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.searchInput:focus::placeholder {
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.searchIcon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 13px;
+  height: 13px;
+  pointer-events: none;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.searchInput:focus ~ .searchIcon {
+  color: rgba(0, 122, 255, 0.7);
+}
+
+.busList {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.emptyState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 14px;
+}
+
+.busTable {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.busTableHeader {
+  display: grid;
+  grid-template-columns: 90px 1fr 100px 90px;
+  gap: 12px;
+  padding: 6px 14px;
+  padding-right: 22px; /* Match scrollbar gutter so columns align with rows */
+  background: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  font-weight: 500;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+  flex-shrink: 0;
+  letter-spacing: -0.01em;
+}
+
+.headerCell {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.busTableBody {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable; /* Reserve scrollbar space so header aligns */
+}
+
+.busTableBody::-webkit-scrollbar {
+  width: 8px;
+}
+
+.busTableBody::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.busTableBody::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}
+
+.busTableBody::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.busRow {
+  display: grid;
+  grid-template-columns: 90px 1fr 100px 90px;
+  gap: 12px;
+  padding: 5px 14px;
+  cursor: pointer;
+  transition: background-color 0.12s ease;
+  border-radius: 5px;
+  min-height: 32px;
+  align-items: center;
+}
+
+.busRow:first-of-type {
+  margin-top: 2px;
+}
+
+.busRow:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.busRow.selected {
+  background: rgba(0, 122, 255, 0.12);
+}
+
+.busRow.selected:hover {
+  background: rgba(0, 122, 255, 0.16);
+}
+
+.cell {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  color: inherit;
+  letter-spacing: -0.01em;
+}
+
+/* Grow Bus Away at bottom (when allowGrow) */
+.growBar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.growBarLabel {
+  font-size: 13px;
+  color: inherit;
+  white-space: nowrap;
+}
+
+.growBarInput {
+  width: 56px;
+  height: 28px;
+  padding: 0 8px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  background: rgba(0, 0, 0, 0.06);
+  color: inherit;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.growBarInput:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.growBarInput:focus {
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer - same styling as file selector / other modals */
+.footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 6px 16px;
+  background: #f8f8f8;
+  gap: 12px;
+}
+
+.footerButtons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+/* Dark mode support */
+:global(html.dark) .searchInput,
+:global(.dark) .searchInput {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+:global(html.dark) .searchInput:hover,
+:global(.dark) .searchInput:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+:global(html.dark) .searchInput:focus,
+:global(.dark) .searchInput:focus {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 1px rgba(99, 179, 237, 0.4);
+}
+
+:global(html.dark) .searchInput::placeholder,
+:global(.dark) .searchInput::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+:global(html.dark) .busList,
+:global(.dark) .busList {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+:global(html.dark) .busTableHeader,
+:global(.dark) .busTableHeader {
+  border-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+:global(html.dark) .busRow:hover,
+:global(.dark) .busRow:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+:global(html.dark) .busRow.selected,
+:global(.dark) .busRow.selected {
+  background: rgba(99, 179, 237, 0.2);
+}
+
+:global(html.dark) .busRow.selected:hover,
+:global(.dark) .busRow.selected:hover {
+  background: rgba(99, 179, 237, 0.25);
+}
+
+:global(html.dark) .emptyState,
+:global(.dark) .emptyState {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+:global(html.dark) .busTableBody::-webkit-scrollbar-thumb,
+:global(.dark) .busTableBody::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+:global(html.dark) .busTableBody::-webkit-scrollbar-thumb:hover,
+:global(.dark) .busTableBody::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+:global(html.dark) .growBarInput,
+:global(.dark) .growBarInput {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+:global(html.dark) .growBarInput:hover,
+:global(.dark) .growBarInput:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+:global(html.dark) .growBarInput:focus,
+:global(.dark) .growBarInput:focus {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 1px rgba(99, 179, 237, 0.4);
+}
+
+:global(html.dark) .footer,
+:global(.dark) .footer {
+  background: #0f172a;
+}

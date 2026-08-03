@@ -1,0 +1,26 @@
+.vertical-resizer {
+  height: 8px;
+  cursor: ns-resize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+  margin: 2px 0;
+}
+
+.vertical-resizer:hover .vertical-resizer-line,
+.vertical-resizer.active .vertical-resizer-line {
+  background: rgba(0, 122, 255, 0.6);
+  height: 3px;
+}
+
+.vertical-resizer-line {
+  width: 40px;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+  transition: all 0.2s ease;
+  pointer-events: none;
+}

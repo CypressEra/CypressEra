@@ -1,0 +1,6 @@
+{
+  "required": "Este campo es obligatorio",
+  "invalidFormat": "Formato inválido",
+  "minLength": "La longitud mínima es de {{min}} caracteres",
+  "maxLength": "La longitud máxima es de {{max}} caracteres"
+}

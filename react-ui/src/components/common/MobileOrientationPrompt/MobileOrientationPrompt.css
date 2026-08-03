@@ -1,0 +1,217 @@
+/* Mobile Orientation Prompt Overlay */
+.mobile-orientation-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.mobile-orientation-content {
+  background: var(--bg-primary, #ffffff);
+  border-radius: 16px;
+  padding: 32px 24px;
+  max-width: 320px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Rotation Animation */
+.rotation-animation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  gap: 12px;
+}
+
+.phone-icon {
+  width: 48px;
+  height: 64px;
+  color: var(--text-primary, #1a1a2e);
+  animation: phoneRotate 2s ease-in-out infinite;
+}
+
+@keyframes phoneRotate {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(90deg);
+  }
+}
+
+.phone-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.rotate-arrow {
+  width: 32px;
+  height: 32px;
+  color: var(--accent-primary, #4f46e5);
+  animation: arrowPulse 2s ease-in-out infinite;
+}
+
+@keyframes arrowPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+.rotate-arrow svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Typography */
+.orientation-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a2e);
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+}
+
+.orientation-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary, #6b7280);
+  margin: 0 0 16px 0;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.orientation-message {
+  font-size: 14px;
+  color: var(--text-primary, #1a1a2e);
+  margin: 0;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.orientation-btn {
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.orientation-btn-primary {
+  background: var(--accent-primary, #4f46e5);
+  color: white;
+}
+
+.orientation-btn-primary:hover {
+  background: var(--accent-primary-hover, #4338ca);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.orientation-btn-primary:active {
+  transform: translateY(0);
+}
+
+.orientation-btn-secondary {
+  background: transparent;
+  color: var(--text-secondary, #6b7280);
+  border: 1px solid var(--border-color, #e5e7eb);
+}
+
+.orientation-btn-secondary:hover {
+  background: var(--bg-secondary, #f3f4f6);
+  color: var(--text-primary, #1a1a2e);
+}
+
+.orientation-btn-secondary:active {
+  background: var(--bg-tertiary, #e5e7eb);
+}
+
+/* Dark Theme Support */
+[data-theme="dark"] .mobile-orientation-content {
+  background: var(--bg-primary, #1a1a2e);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .phone-icon {
+  color: var(--text-primary, #e5e7eb);
+}
+
+[data-theme="dark"] .orientation-title {
+  color: var(--text-primary, #e5e7eb);
+}
+
+[data-theme="dark"] .orientation-message {
+  color: var(--text-secondary, #9ca3af);
+}
+
+[data-theme="dark"] .orientation-btn-secondary {
+  border-color: var(--border-color, #374151);
+  color: var(--text-secondary, #9ca3af);
+}
+
+[data-theme="dark"] .orientation-btn-secondary:hover {
+  background: var(--bg-secondary, #111827);
+  color: var(--text-primary, #e5e7eb);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .mobile-orientation-content {
+    padding: 24px 20px;
+    max-width: 280px;
+  }
+
+  .orientation-title {
+    font-size: 18px;
+  }
+
+  .orientation-message {
+    font-size: 13px;
+  }
+
+  .phone-icon {
+    width: 40px;
+    height: 56px;
+  }
+}
+
+/* Remove button styles since no longer needed */

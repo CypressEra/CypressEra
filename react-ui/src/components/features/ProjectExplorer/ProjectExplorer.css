@@ -1,0 +1,201 @@
+.project-explorer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.section-header {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+}
+
+.add-file-btn {
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 300;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  line-height: 1;
+  padding-bottom: 2px;
+}
+
+.add-file-btn:hover {
+  background: rgba(0, 122, 255, 0.1);
+  color: #007AFF;
+}
+
+.refresh-btn {
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  padding: 0;
+}
+
+.refresh-btn:hover {
+  background: rgba(0, 122, 255, 0.1);
+  color: #007AFF;
+}
+
+.refresh-btn:hover svg {
+  animation: spin 0.6s ease-in-out;
+}
+
+.refresh-btn:active {
+  transform: scale(0.95);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.file-tree {
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-size: 13px;
+  min-height: fit-content;
+}
+
+.file-item {
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  user-select: none;
+  color: inherit;
+}
+
+.file-item:hover {
+  background: rgba(0, 122, 255, 0.08);
+}
+
+.file-item.selected {
+  background: rgba(0, 122, 255, 0.15);
+  transition: none;
+  transform: none;
+}
+
+.file-item.selected .file-name {
+  color: #007AFF;
+  font-weight: 400;
+  transition: none;
+}
+
+
+.file-item.clicked {
+  background: rgba(0, 122, 255, 0.2);
+  transform: scale(0.98);
+  transition: background 0.1s ease, transform 0.1s ease;
+}
+
+.file-item.selected.clicked {
+  transform: none;
+}
+
+.file-item.indent {
+  padding-left: 32px;
+}
+
+.folder-arrow {
+  font-size: 10px;
+  color: #888;
+  width: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.file-icon {
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+}
+
+.file-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.folder-children {
+  animation: expandFolder 0.2s ease;
+}
+
+@keyframes expandFolder {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom Scrollbar */
+.file-tree::-webkit-scrollbar {
+  width: 8px;
+}
+
+.file-tree::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.file-tree::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}
+
+.file-tree::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.section-divider {
+  height: 1px;
+  margin: 16px 8px;
+  background: rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+/* Dark mode divider */
+html.dark .section-divider,
+.dark .section-divider {
+  background: rgba(255, 255, 255, 0.1);
+}
+

@@ -1,0 +1,132 @@
+.resizable-panel {
+  position: relative;
+  background: var(--bg-primary);
+  border-radius: 10px;
+  border: 1px solid var(--border-secondary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s ease, border-color 0.3s ease, background-color 0.3s ease;
+  height: 100%;
+  width: 100%;
+}
+
+.resizable-panel:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.panel-header {
+  height: 36px;
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  cursor: default;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.panel-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  flex: 1;
+}
+
+.panel-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.panel-btn {
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.panel-btn:hover {
+  background: var(--bg-primary);
+}
+
+.panel-btn:active {
+  transform: scale(0.9);
+}
+
+.panel-content {
+  flex: 1;
+  padding: 16px;
+  overflow: auto;
+}
+
+/* Resize Handles */
+.resize-handle {
+  position: absolute;
+  z-index: 10;
+}
+
+.resize-right {
+  top: 0;
+  right: -4px;
+  width: 8px;
+  height: 100%;
+  cursor: ew-resize;
+}
+
+.resize-bottom {
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 8px;
+  cursor: ns-resize;
+}
+
+.resize-corner {
+  right: -4px;
+  bottom: -4px;
+  width: 12px;
+  height: 12px;
+  cursor: nwse-resize;
+}
+
+.resize-handle:hover {
+  background: var(--focus-ring);
+}
+
+/* Custom Scrollbar */
+.panel-content::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.panel-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.panel-content::-webkit-scrollbar-thumb {
+  background: var(--border-primary);
+  border-radius: 5px;
+  border: 1px solid transparent;
+  background-clip: content-box;
+  transition: background-color 0.3s ease;
+}
+
+.panel-content::-webkit-scrollbar-thumb:hover {
+  background: var(--border-secondary);
+  background-clip: content-box;
+}

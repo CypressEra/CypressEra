@@ -1,0 +1,342 @@
+.grid-layout {
+  display: flex;
+  height: calc(100vh - 40px);
+  gap: 12px;
+  padding: 8px;
+  padding-bottom: 8px;
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  overflow: hidden;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.grid-layout.has-fullscreen {
+  padding: 0;
+  gap: 0;
+}
+
+.fullscreen-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1000;
+  animation: expandFullscreen 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hide panels when not in fullscreen but keep them mounted to preserve state */
+.hidden-panel {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+@keyframes expandFullscreen {
+  from {
+    opacity: 0.8;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* AI Assistant collapsed state is now handled by ResizableContainer */
+.resizable-container.ai-collapsed {
+  width: 52px !important;
+}
+
+.grid-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+}
+
+.grid-row {
+  display: flex;
+  gap: 12px;
+  min-height: 0;
+}
+
+.diagram-row {
+  flex-shrink: 1;
+  overflow: visible;
+  min-height: 60px;
+}
+
+.logger-row {
+  flex-shrink: 0;
+  overflow: visible;
+  min-height: 100px;
+}
+
+.main-panel {
+  flex: 1;
+  height: 100%;
+}
+
+.full-width {
+  width: 100%;
+  height: 100%;
+}
+
+/* Panel Sections */
+.panel-section {
+  margin-bottom: 20px;
+}
+
+/* Removed - moved to NetworkDiagram.css */
+
+/* Control Panel */
+.control-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.control-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.file-input-wrapper {
+  position: relative;
+}
+
+.file-input {
+  display: none;
+}
+
+.file-input-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background: rgba(0, 122, 255, 0.1);
+  color: #007AFF;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.2s ease;
+  text-align: center;
+}
+
+.file-input-btn:hover {
+  background: rgba(0, 122, 255, 0.2);
+}
+
+.control-select,
+.control-input {
+  padding: 8px 12px;
+  border: 1px solid var(--border-primary);
+  border-radius: 6px;
+  font-size: 13px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+.control-select:focus,
+.control-input:focus {
+  outline: none;
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+.run-button {
+  margin-top: 8px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+  transition: all 0.2s ease;
+}
+
+.run-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.4);
+}
+
+.run-button:active {
+  transform: translateY(0);
+}
+
+.run-icon {
+  font-size: 12px;
+}
+
+.status-box {
+  margin-top: 8px;
+  padding: 12px;
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+  font-size: 12px;
+  transition: background-color 0.3s ease;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.status-value {
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+.status-value.ready {
+  color: #34C759;
+}
+
+/* Results Tables */
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.results-table thead {
+  background: var(--bg-tertiary);
+  position: sticky;
+  top: 0;
+  transition: background-color 0.3s ease;
+}
+
+.results-table th {
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-primary);
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.results-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-secondary);
+  color: var(--text-primary);
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.results-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.results-table tbody tr:hover {
+  background: var(--bg-tertiary);
+}
+
+.results-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Logger Panel */
+.logger-panel {
+  width: 100%;
+  height: 100%;
+}
+
+/* Add shadows to diagram and logger panels */
+.diagram-row .resizable-panel,
+.logger-row .resizable-panel {
+  border: 1px solid var(--border-secondary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+.diagram-row .resizable-panel:hover,
+.logger-row .resizable-panel:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Ensure ResizableContainer fills space */
+.grid-layout > .resizable-container,
+.grid-main > .grid-row > .resizable-panel {
+  height: 100%;
+}
+
+/* Panel Header with Tabs */
+.panel-header-with-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+}
+
+.view-tabs {
+  display: flex;
+  gap: 0;
+  background: var(--bg-tertiary);
+  padding: 2px;
+  border-radius: 7px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+  transition: background-color 0.3s ease;
+}
+
+.view-tab {
+  padding: 5px 14px;
+  border: none;
+  background: transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+  white-space: nowrap;
+}
+
+.view-tab:hover:not(.active) {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.view-tab.active {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.06);
+  font-weight: 600;
+}
+
+.view-tab.active:hover {
+  background: var(--bg-primary);
+}

@@ -1,0 +1,44 @@
+/* ============================================================================
+/* IEEE 25-Bus Network  --  Subsystem Definitions (.sub)
+/* ----------------------------------------------------------------------------
+/* TARA-format subsystem file for N-1 / N-1-1 contingency analysis.
+/* Companion case : ieee_25bus.rawx   (IEEE 25 BUS NETWORK, N-1-1 demonstration)
+/*
+/* Network : 25 buses (101-110 at 138 kV; 211-225 at 230 kV)
+/* Areas   : 1 SOUTH  2 SOUTHGEN  3 MIDAREA  4 NORTH  5 RADIAL
+/* ============================================================================
+
+/* Full study system - everything monitored
+subsystem 'MonSys'
+ Add All Buses
+END
+
+/* 138 kV southern + radial load pocket
+subsystem 'SouthSys'
+ AREA 1
+ AREA 2
+ AREA 5
+END
+
+/* 230 kV backbone
+subsystem 'MidNorthSys'
+ AREA 3
+ AREA 4
+END
+
+/* All 138 kV buses
+subsystem 'Sys138'
+ KVRange 138 138
+END
+
+/* All 230 kV buses
+subsystem 'Sys230'
+ KVRange 230 230
+END
+
+/* Units that pick up generation post-trip (used by Default Dispatch in .con)
+subsystem 'Dispatch'
+ AREA 3
+ AREA 4
+ scale all generation
+END

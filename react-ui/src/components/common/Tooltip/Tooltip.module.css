@@ -1,0 +1,60 @@
+/* The app-wide tooltip surface — the same floating-surface recipe as the
+   context menu and run-details popover (--menu-bg vibrancy card, hairline
+   border, ring shadow), so it reads clearly on white and dark backgrounds
+   alike. 11px medium help-tag text. */
+.tip {
+  position: fixed;
+  z-index: 10001;
+  visibility: hidden; /* made visible once measured and clamped */
+  max-width: 320px;
+  background: var(--menu-bg, rgba(245, 245, 247, 0.92));
+  color: var(--text-primary);
+  border: 1px solid var(--border-secondary, rgba(120, 120, 128, 0.25));
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  line-height: 1.45;
+  pointer-events: none;
+  box-shadow:
+    0 0 0 0.5px var(--border-secondary, rgba(120, 120, 128, 0.25)),
+    0 4px 16px var(--shadow-secondary, rgba(0, 0, 0, 0.18));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: tipFadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Bordered arrow, kept on the target's center by --arrow-left: a rotated
+   square sharing the tip's surface (same technique as the popover); only the
+   two outward edges carry the border. */
+.tip::before {
+  content: '';
+  position: absolute;
+  left: var(--arrow-left, 50%);
+  width: 10px;
+  height: 10px;
+  transform: rotate(45deg);
+  background: var(--menu-bg, rgba(245, 245, 247, 0.92));
+}
+
+.top::before {
+  bottom: -5px;
+  border-right: 1px solid var(--border-secondary, rgba(120, 120, 128, 0.25));
+  border-bottom: 1px solid var(--border-secondary, rgba(120, 120, 128, 0.25));
+}
+
+.bottom::before {
+  top: -5px;
+  border-left: 1px solid var(--border-secondary, rgba(120, 120, 128, 0.25));
+  border-top: 1px solid var(--border-secondary, rgba(120, 120, 128, 0.25));
+}
+
+@keyframes tipFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

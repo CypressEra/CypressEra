@@ -1,0 +1,46 @@
+# Robots.txt for CypressEra Flow
+# https://flow.cypressera.ai
+
+User-agent: *
+Allow: /
+
+# Disallow sensitive paths
+Disallow: /api/
+Disallow: /auth/
+Disallow: /private/
+
+# Allow all crawlers to access static assets
+Allow: /static/
+Allow: /logo.svg
+Allow: /logo192.png
+Allow: /logo.svg
+
+# Crawl delay (optional, be nice to servers)
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://flow.cypressera.ai/sitemap.xml
+
+# Google specific
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing specific
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+
+# Baidu
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 2
+
+# Yandex
+User-agent: Yandex
+Allow: /
+Crawl-delay: 2

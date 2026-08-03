@@ -1,0 +1,80 @@
+{
+  "title": "Configuración de flujo de potencia CA",
+  "groups": {
+    "convergence": "Convergencia",
+    "initialization": "Inicialización",
+    "control": "Control",
+    "solutionOptions": "Opciones de solución"
+  },
+  "fields": {
+    "tolerance": {
+      "label": "Tolerancia de convergencia",
+      "description": "Desbalance de potencia máximo (p.u.) para convergencia. Dejar vacío para usar el valor del modelo o el predeterminado del solver.",
+      "placeholder": "ej. 1e-6"
+    },
+    "max_iterations": {
+      "label": "Iteraciones máximas",
+      "description": "Número máximo de iteraciones Newton-Raphson por resolución.",
+      "placeholder": "ej. 100"
+    },
+    "flat_start": {
+      "label": "Arranque plano",
+      "description": "Inicializar todos los voltajes a 1,0∠0°."
+    },
+    "max_outerloop_iterations": {
+      "label": "Iteraciones máx. de bucle externo",
+      "description": "Iteraciones máximas para el control de potencia reactiva y voltaje.",
+      "placeholder": "ej. 20"
+    },
+    "control_tolerance": {
+      "label": "Tolerancia de límite Q",
+      "description": "Margen aceptable de violación de límite Q.",
+      "unit": "MVAr",
+      "placeholder": "ej. 0,1"
+    },
+    "tap_adjustment": {
+      "label": "Ajuste de toma",
+      "description": "Controla cómo se ajustan las tomas del transformador durante el bucle externo.",
+      "options": {
+        "locked": "Bloqueado",
+        "stepping": "Escalonado",
+        "direct": "Directo"
+      }
+    },
+    "phase_shift_adjustment": {
+      "label": "Ajuste de desfase",
+      "description": "Habilita el control automático de transformadores de desfase."
+    },
+    "dc_tap_adjustment": {
+      "label": "Ajuste de toma DC",
+      "description": "Habilita el ajuste de toma para líneas DC clásicas de dos terminales."
+    },
+    "switched_shunt_adjustment": {
+      "label": "Ajuste de banco conmutado",
+      "description": "Controla qué bancos conmutados pueden ajustarse durante la resolución.",
+      "options": {
+        "lock_all": "Bloquear todo",
+        "enable_all": "Habilitar todo",
+        "continuous_only": "Solo continuos"
+      }
+    },
+    "area_interchange_adjustment": {
+      "label": "Ajuste de intercambio de área",
+      "description": "Ajusta el generador de compensación de cada área para cumplir su intercambio neto programado. Deshabilitado por defecto.",
+      "options": {
+        "disabled": "Deshabilitado",
+        "tie_lines_only": "Solo líneas de enlace",
+        "tie_lines_and_loads": "Líneas de enlace y cargas"
+      }
+    }
+  },
+  "buttons": {
+    "resetToDefaults": "Valores predeterminados",
+    "close": "Cerrar"
+  },
+  "validation": {
+    "positiveNumber": "Debe ser un número positivo",
+    "positiveInteger": "Debe ser un entero positivo",
+    "invalidNumber": "Número inválido"
+  }
+}

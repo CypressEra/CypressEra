@@ -1,0 +1,30 @@
+{
+  "title": "潮流求解器",
+  "subtitle": "上传 RAWX 文件并运行 DC 潮流计算",
+  "systemSummary": "系统摘要",
+  "busResults": "母线结果",
+  "branchResults": "支路结果",
+  "metrics": {
+    "totalLoad": "总负荷 (MW)",
+    "totalGeneration": "总发电 (MW)",
+    "totalLosses": "总损耗 (MW)",
+    "efficiency": "效率"
+  },
+  "table": {
+    "busNumber": "母线号",
+    "voltage": "电压 (pu)",
+    "angle": "角度 (度)",
+    "pInjection": "有功注入 (MW)",
+    "qInjection": "无功注入 (MVAr)",
+    "fromBus": "起始母线",
+    "toBus": "终止母线",
+    "pFlow": "有功潮流 (MW)",
+    "qFlow": "无功潮流 (MVAr)",
+    "sFlow": "视在潮流 (MVA)",
+    "losses": "损耗 (MW)"
+  },
+  "method": {
+    "dc": "DC 潮流",
+    "notImplemented": "AC 潮流尚未实现"
+  }
+}

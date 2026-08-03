@@ -1,0 +1,6 @@
+{
+  "required": "此字段为必填项",
+  "invalidFormat": "格式无效",
+  "minLength": "最小长度为 {{min}} 个字符",
+  "maxLength": "最大长度为 {{max}} 个字符"
+}

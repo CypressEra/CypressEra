@@ -1,0 +1,131 @@
+services:
+  react-ui:
+    image: ghcr.io/cypressera/react-ui/cypressera-react-ui:${IMAGE_TAG:-latest}
+    environment:
+      - PORT=3000
+      - API_BASE_URL=${PUBLIC_API_BASE_URL:-https://${DOMAIN}}
+      - AGENT_BASE_URL=${PUBLIC_AGENT_BASE_URL:-https://${DOMAIN}/agent}
+    restart: unless-stopped
+    networks:
+      - cypressera
+
+  api-server:
+    image: ghcr.io/cypressera/api-server/cypressera-api-server:${IMAGE_TAG:-latest}
+    environment:
+      - GIN_MODE=${GIN_MODE:-release}
+      - API_SERVER_URL=http://api-server:8080
+      - PLATFORM_VERSION=${PLATFORM_VERSION:-0.0.0}
+      - PLATFORM_BUILD=${PLATFORM_BUILD:-preview}
+      # password (default): JWT login backed by postgres — pre-AUTH_MODE behavior.
+      # none: no login, synthetic single user, database never touched.
+      - AUTH_MODE=${AUTH_MODE:-password}
+      - MAILGUN_DOMAIN=${MAILGUN_DOMAIN}
+      - MAILGUN_API_KEY=${MAILGUN_API_KEY}
+      - MAILGUN_FROM=${MAILGUN_FROM}
+      - FRONTEND_BASE_URL=${FRONTEND_BASE_URL:-https://${DOMAIN}}
+      - DATABASE_URL=${DATABASE_URL}
+      - AUTH_JWT_SECRET=${AUTH_JWT_SECRET}
+      - AUTH_ADMIN_EMAIL=${AUTH_ADMIN_EMAIL}
+      - AUTH_ADMIN_PASSWORD=${AUTH_ADMIN_PASSWORD}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-}
+      - SERVICE_AUTH_SECRET=${SERVICE_AUTH_SECRET}
+      - STORAGE_BASE_PATH=/user-data
+      - AGENT_SERVER_URL=http://agent-server:3001/health
+      - SOLVER_PATH=/flow-solver/target/release/flow-solver
+    volumes:
+      - ./bin/flow-solver:/flow-solver/target/release/flow-solver:ro
+      - user-data:/user-data
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      agent-server:
+        condition: service_started
+    networks:
+      - cypressera
+
+  agent-server:
+    image: ghcr.io/cypressera/agent-server/cypressera-agent-server:${IMAGE_TAG:-latest}
+    environment:
+      - PORT=${AGENT_PORT:-3001}
+      - APP_ENV=${APP_ENV:-production}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL:-https://api.lkeap.cloud.tencent.com/coding/v3}
+      - OPENAI_MODEL=${OPENAI_MODEL:-glm-5}
+      - KB_EMBEDDING_MODEL=${KB_EMBEDDING_MODEL:-text-embedding-3-small}
+      - KB_EMBEDDING_API_KEY=${KB_EMBEDDING_API_KEY}
+      - KB_EMBEDDING_BASE_URL=${KB_EMBEDDING_BASE_URL:-https://api.openai.com/v1}
+      - KB_BASE_PATH=/user-data/knowledge
+      - KB_ENABLE_FILE_WATCHER=${KB_ENABLE_FILE_WATCHER:-true}
+      - KB_CHUNK_SIZE=${KB_CHUNK_SIZE:-800}
+      - KB_CHUNK_OVERLAP=${KB_CHUNK_OVERLAP:-150}
+      - KB_TOP_K=${KB_TOP_K:-3}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_FORMAT=${LOG_FORMAT:-json}
+      - ENABLE_REQUEST_LOGGING=${ENABLE_REQUEST_LOGGING:-true}
+      - ENABLE_BRAIN=${ENABLE_BRAIN:-true}
+      - BRAIN_MAX_ROUNDS=${BRAIN_MAX_ROUNDS:-50}
+      - BRAIN_MAX_TOKENS=${BRAIN_MAX_TOKENS:-100000}
+      - AUTH_JWT_SECRET=${AUTH_JWT_SECRET}
+      - SERVICE_AUTH_ENABLED=${SERVICE_AUTH_ENABLED:-true}
+      - SERVICE_AUTH_SECRET=${SERVICE_AUTH_SECRET}
+      - API_SERVER_URL=http://api-server:8080
+    volumes:
+      - user-data:/user-data
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3001/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - cypressera
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-xflow}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB:-xflow}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-xflow}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - cypressera
+
+  caddy:
+    image: caddy:2-alpine
+    environment:
+      - DOMAIN=${DOMAIN:-flow.cypressera.ai}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    restart: unless-stopped
+    depends_on:
+      - react-ui
+      - api-server
+      - agent-server
+    networks:
+      - cypressera
+
+volumes:
+  user-data:
+  postgres-data:
+  caddy_data:
+  caddy_config:
+
+networks:
+  cypressera:
+    driver: bridge

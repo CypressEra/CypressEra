@@ -1,0 +1,11 @@
+{
+  "fileSelection": "Veuillez d'abord sélectionner un fichier et créer une session",
+  "sessionRequired": "Veuillez d'abord créer une session et télécharger un fichier",
+  "invalidFile": "Veuillez sélectionner un fichier .rawx valide",
+  "createSessionFailed": "Échec de la création de la session",
+  "uploadFailed": "Échec du téléchargement du fichier",
+  "calculationFailed": "Échec du calcul de flux de puissance",
+  "noResults": "Aucun résultat fourni dans la réponse",
+  "serverConnection": "Échec de la connexion au serveur",
+  "serverStatus": "Le serveur a renvoyé le statut : {{status}}"
+}

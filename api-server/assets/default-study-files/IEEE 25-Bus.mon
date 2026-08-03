@@ -1,0 +1,37 @@
+/* ============================================================================
+/* IEEE 25-Bus Network  --  Monitored Elements (.mon)
+/* ----------------------------------------------------------------------------
+/* TARA-format monitor file. Defines the branch flows and bus voltages checked
+/* for the base case and for every contingency in ieee_25bus.con.
+/* Requires the subsystem definitions in ieee_25bus.sub
+/* ============================================================================
+
+/* --- BRANCH THERMAL MONITORING ---
+
+MONITOR BRANCHES IN SYSTEM 'MonSys'
+MONITOR TIES FROM SYSTEM 'SouthSys' KVRANGE 138 230
+
+/* --- INTERFACE MONITORING ---
+/* South (138 kV) to Mid (230 kV) transformer interface.
+
+Monitor interface 'South_to_Mid' Rating 2000
+ Monitor branch from bus 103 to bus 224 ckt 1
+ Monitor branch from bus 109 to bus 211 ckt 1
+ Monitor branch from bus 109 to bus 212 ckt 1
+ Monitor branch from bus 110 to bus 211 ckt 1
+ Monitor branch from bus 110 to bus 212 ckt 1
+End
+
+/* --- VOLTAGE MAGNITUDE MONITORING ---
+/*             area  kvrange lo  hi   normalLo normalHi  emergLo emergHi
+
+monitor voltage range area 1 kvrange 138 138  0.95 1.05  0.90 1.10
+monitor voltage range area 2 kvrange 138 138  0.95 1.05  0.90 1.10
+monitor voltage range area 5 kvrange 138 138  0.95 1.05  0.90 1.10
+monitor voltage range area 3 kvrange 230 230  0.95 1.05  0.90 1.10
+monitor voltage range area 4 kvrange 230 230  0.95 1.05  0.90 1.10
+
+/* --- VOLTAGE DEVIATION MONITORING ---
+/* Flag any bus whose voltage moves more than 0.05 pu from the base case.
+
+monitor voltage deviation in system 'MonSys' 0.05 0.05

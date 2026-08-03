@@ -1,0 +1,280 @@
+/* Run Analysis dialog — macOS-style, design-token driven */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 18px 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', system-ui, sans-serif;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sectionTitle {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ---- Study-file rows ---- */
+
+.studyRows {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-secondary);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.studyRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+.studyRow:last-child {
+  border-bottom: none;
+}
+
+.studyLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  flex-shrink: 0;
+  width: 140px;
+}
+
+.studyFile {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.studyFileName {
+  font-size: 12px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.studyFileNameEmpty {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.studyError {
+  font-size: 11px;
+  color: #ff3b30;
+}
+
+/* ---- Divider ---- */
+
+.divider {
+  height: 1px;
+  background: var(--border-secondary);
+  border: none;
+  margin: 0;
+}
+
+/* ---- Analysis options ---- */
+
+.tabPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 4px 2px 2px;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fieldLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  width: 150px;
+  flex-shrink: 0;
+}
+
+.select,
+.input,
+.numberInput {
+  height: 30px;
+  padding: 4px 10px;
+  border: 1px solid var(--border-primary);
+  border-radius: 6px;
+  font-size: 13px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.select:focus,
+.input:focus,
+.numberInput:focus {
+  outline: none;
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.15);
+}
+
+.numberInput {
+  width: 84px;
+}
+
+.inlineField {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.unit {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.checkboxGroup {
+  display: flex;
+  gap: 18px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.checkboxLabel input {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--selection-bg);
+  cursor: pointer;
+}
+
+/* ---- Footer ---- */
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.footerStatus {
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.footerStatusError {
+  color: #ff3b30;
+}
+
+.footerStatusSuccess {
+  color: #34c759;
+}
+
+.footerButtons {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+
+/* ===== Study-file error notice ===== */
+.sectionHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.studyFileError {
+  font-size: 11px;
+  color: #ff3b30;
+}
+
+.studyFileWarning {
+  font-size: 11px;
+  color: #ff9f0a;
+}
+
+/* ===== AC contingency analysis ===== */
+.reportSummary {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.accProgress {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 10px;
+}
+
+.accBar {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--surface-secondary, rgba(120, 120, 128, 0.16));
+  overflow: hidden;
+}
+
+.accBarFill {
+  height: 100%;
+  background: #0a84ff;
+  transition: width 0.3s ease;
+}
+
+/* Run summary shown beside the progress bar: status, counts, duration. */
+.accInfo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  font-size: 12px;
+}
+
+.accInfoItem {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.accInfoLabel {
+  color: var(--text-secondary);
+}
+
+.accInfoValue {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.accNotice {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #ff3b30;
+}
+

@@ -1,0 +1,80 @@
+{
+  "title": "AC 潮流计算设置",
+  "groups": {
+    "convergence": "收敛性",
+    "initialization": "初始化",
+    "control": "控制",
+    "solutionOptions": "求解选项"
+  },
+  "fields": {
+    "tolerance": {
+      "label": "收敛精度",
+      "description": "收敛判据的最大功率失配量（标幺值）。越小越精确。留空则使用模型值或求解器默认值。",
+      "placeholder": "例如 1e-6"
+    },
+    "max_iterations": {
+      "label": "最大迭代次数",
+      "description": "每次求解的牛顿-拉夫逊最大迭代次数。",
+      "placeholder": "例如 100"
+    },
+    "flat_start": {
+      "label": "平启动",
+      "description": "将所有母线电压初始化为 1.0∠0°。"
+    },
+    "max_outerloop_iterations": {
+      "label": "最大外循环迭代次数",
+      "description": "无功功率和电压控制循环的最大迭代次数。",
+      "placeholder": "例如 20"
+    },
+    "control_tolerance": {
+      "label": "无功越限容差",
+      "description": "无功功率越限的允许裕度。",
+      "unit": "MVAr",
+      "placeholder": "例如 0.1"
+    },
+    "tap_adjustment": {
+      "label": "变压器抽头调整",
+      "description": "控制外循环中变压器抽头的调整方式。",
+      "options": {
+        "locked": "锁定",
+        "stepping": "步进",
+        "direct": "直接"
+      }
+    },
+    "phase_shift_adjustment": {
+      "label": "移相调整",
+      "description": "启用移相变压器的自动控制。"
+    },
+    "dc_tap_adjustment": {
+      "label": "直流抽头调整",
+      "description": "启用经典两端直流线路的抽头调整。"
+    },
+    "switched_shunt_adjustment": {
+      "label": "并联开关电容调整",
+      "description": "控制求解过程中允许调整的并联开关电容范围。",
+      "options": {
+        "lock_all": "全锁定",
+        "enable_all": "全启用",
+        "continuous_only": "仅连续型"
+      }
+    },
+    "area_interchange_adjustment": {
+      "label": "区域交换功率调整",
+      "description": "调整各区域的平衡发电机以满足其计划净交换功率。默认禁用。",
+      "options": {
+        "disabled": "禁用",
+        "tie_lines_only": "仅联络线",
+        "tie_lines_and_loads": "联络线与负荷"
+      }
+    }
+  },
+  "buttons": {
+    "resetToDefaults": "恢复默认值",
+    "close": "关闭"
+  },
+  "validation": {
+    "positiveNumber": "必须为正数",
+    "positiveInteger": "必须为正整数",
+    "invalidNumber": "无效数值"
+  }
+}

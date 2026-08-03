@@ -1,0 +1,30 @@
+{
+  "title": "Asistente IA",
+  "welcomeMessage": "¡Hola! Soy tu asistente de IA Chuckle Chuckie. ¿Cómo puedo ayudarte con tu análisis de flujo de potencia hoy?",
+  "presetQuestionsLabel": "Puedes preguntar",
+  "presetQuestions": [
+    "¿Qué barra tiene el voltaje más bajo en la red IEEE de 25 barras?",
+    "Ejecuta un análisis de contingencias AC de ejemplo en la red IEEE de 25 barras"
+  ],
+  "placeholder": "Pregúntame cualquier cosa sobre análisis de flujo de potencia...",
+  "send": "Enviar",
+  "typing": "IA está escribiendo...",
+  "useKnowledgeBase": "Usar Base de Conocimiento",
+  "knowledgeBaseButton": "Base de Conocimiento",
+  "engineCallingTitle": "Invocando el motor Xolution",
+  "engineCallingDefaultDetail": "Ejecutando función del SDK",
+  "engineCallingMore": "{{count}} llamadas de función más…",
+  "responses": {
+    "default": "Entiendo tu pregunta sobre el análisis de flujo de potencia. Déjame ayudarte con eso. ¿Podrías proporcionar más detalles específicos sobre lo que te gustaría analizar?",
+    "powerFlow": "El análisis de flujo de potencia ayuda a determinar las condiciones de operación en estado estacionario de un sistema de energía eléctrica. Puedo ayudarte a entender los resultados, solucionar problemas de convergencia o explicar diferentes métodos de cálculo.",
+    "convergence": "Los problemas de convergencia en el análisis de flujo de potencia generalmente indican problemas del sistema como líneas sobrecargadas, violaciones de voltaje o datos del sistema incorrectos. Déjame ayudarte a identificar y resolver estos problemas.",
+    "methods": "Hay varios métodos de cálculo de flujo de potencia: Flujo de Potencia DC (rápido, aproximado), Flujo de Potencia AC (preciso, más lento) y Desacoplado Rápido (enfoque equilibrado). ¿Qué método estás usando?",
+    "results": "Los resultados del flujo de potencia incluyen voltajes de barra, flujos de línea y pérdidas del sistema. Puedo ayudarte a interpretar estos resultados e identificar cualquier problema del sistema u oportunidades de optimización."
+  },
+  "errors": {
+    "sendFailed": "Error al enviar mensaje. Por favor, inténtalo de nuevo.",
+    "networkError": "Error de red. Por favor, verifica tu conexión.",
+    "serverError": "Error del servidor. Por favor, inténtalo más tarde."
+  },
+  "stopGeneration": "Detener"
+}

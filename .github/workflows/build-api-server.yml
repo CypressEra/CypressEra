@@ -1,0 +1,54 @@
+name: Build & Push api-server
+
+on:
+  push:
+    branches: [main]
+    paths: ['api-server/**', '.github/workflows/build-api-server.yml']
+  pull_request:
+    branches: [main]
+    paths: ['api-server/**', '.github/workflows/build-api-server.yml']
+
+env:
+  REGISTRY: ghcr.io
+  # Hardcoded (not ${{ github.repository }}) so the image path stays identical
+  # to the pre-monorepo era — deployed instances pull the same name forever.
+  IMAGE_NAME: cypressera/api-server/cypressera-api-server
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha,prefix=
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: ./api-server
+          file: ./api-server/Dockerfile
+          push: ${{ github.event_name == 'push' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

@@ -1,0 +1,70 @@
+server:
+  host: "0.0.0.0"
+  port: 8080
+
+database:
+  # PostgreSQL connection string for user authentication.
+  # For local dev (using docker-compose postgres with port 5433 exposed):
+  # postgres://xflow:xflow_password@localhost:5433/xflow?sslmode=disable
+  # In production: set DATABASE_URL env var (preferred) and use sslmode=require.
+  url: "postgres://xflow:xflow_password@localhost:5433/xflow?sslmode=disable"
+
+storage:
+  # Storage base path for user files (model, sessions, results)
+  # Default: ../user-data (inside project directory)
+  # Can be overridden via STORAGE_BASE_PATH environment variable
+  # Path will be resolved to absolute path automatically
+  base_path: "../user-data"
+  max_file_size: 134217728  # 128MB in bytes
+  max_sessions_per_user: 5
+
+solver:
+  path: "../flow-solver/target/release/flow-solver"
+  # Seconds to wait for a single solve-flow run.
+  #   0  => no time cap (default): the solve runs to completion.
+  #   >0 => abort the solve after this many seconds (safety cap).
+  # Parse/edit/analyze/contingency have their own separate timeouts.
+  timeout_seconds: 0
+
+log:
+  level: "info"
+  format: "json"
+  dir: "./logs"
+  max_size: 20        # MB
+  max_backups: 14     # Number of files
+  max_age: 30         # Days
+  compress: true      # Compress rotated files
+
+gin:
+  mode: "debug"  # debug or release
+
+# WebSocket Configuration
+websocket:
+  enabled: true                    # Enable/disable WebSocket server
+  heartbeat_interval: 5            # Client ping interval (seconds)
+  connection_timeout: 10           # Server timeout (seconds)
+  fallback_to_polling: true        # Auto fallback to HTTP polling
+  max_connections: 0               # 0 = unlimited
+
+# Service Authentication Configuration
+service_auth:
+  enabled: true                    # Enable/disable service authentication
+  secret_env: "SERVICE_AUTH_SECRET"  # Environment variable name for secret
+  token_expiry: 3600               # Token expiry time (seconds), 1 hour
+
+# Heartbeat Configuration
+heartbeat:
+  enabled: true                    # Enable/disable detailed heartbeat
+  check_dependencies: true         # Check dependency health status
+  collect_metrics: true            # Collect performance metrics
+  dependencies:
+    - name: database
+      type: postgres
+      required: true
+    - name: solver
+      type: process
+      required: true
+    - name: mcp_server
+      type: http
+      url: "http://localhost:3001/health"
+      required: false 

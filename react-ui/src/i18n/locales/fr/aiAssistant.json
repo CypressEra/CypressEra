@@ -1,0 +1,30 @@
+{
+  "title": "Assistant IA",
+  "welcomeMessage": "Bonjour ! Je suis votre assistant IA Chuckle Chuckie. Comment puis-je vous aider avec votre analyse de flux de puissance aujourd'hui ?",
+  "presetQuestionsLabel": "Vous pouvez demander",
+  "presetQuestions": [
+    "Quel jeu de barres a la tension la plus basse sur le réseau IEEE 25 nœuds ?",
+    "Lancez un exemple d'analyse de contingence AC sur le réseau IEEE 25 nœuds"
+  ],
+  "placeholder": "Posez-moi une question sur l'analyse de flux de puissance...",
+  "send": "Envoyer",
+  "typing": "L'IA tape...",
+  "useKnowledgeBase": "Utiliser la Base de Connaissances",
+  "knowledgeBaseButton": "Connaissances",
+  "engineCallingTitle": "Appel du Moteur Xolution",
+  "engineCallingDefaultDetail": "Exécution de la fonction SDK",
+  "engineCallingMore": "{{count}} autres appels de fonction…",
+  "responses": {
+    "default": "Je comprends votre question sur l'analyse de flux de puissance. Laissez-moi vous aider. Pourriez-vous fournir plus de détails spécifiques sur ce que vous souhaitez analyser ?",
+    "powerFlow": "L'analyse de flux de puissance aide à déterminer les conditions de fonctionnement en régime permanent d'un système électrique. Je peux vous aider à comprendre les résultats, résoudre les problèmes de convergence ou expliquer les différentes méthodes de calcul.",
+    "convergence": "Les problèmes de convergence dans l'analyse de flux de puissance indiquent généralement des problèmes système comme des lignes surchargées, des violations de tension ou des données système incorrectes. Laissez-moi vous aider à identifier et résoudre ces problèmes.",
+    "methods": "Il existe plusieurs méthodes de calcul de flux de puissance : Flux de Puissance DC (rapide, approximatif), Flux de Puissance AC (précis, plus lent) et Découplage Rapide (approche équilibrée). Quelle méthode utilisez-vous ?",
+    "results": "Les résultats du flux de puissance incluent les tensions aux nœuds, les flux sur les lignes et les pertes du système. Je peux vous aider à interpréter ces résultats et identifier les problèmes système ou les opportunités d'optimisation."
+  },
+  "errors": {
+    "sendFailed": "Échec de l'envoi du message. Veuillez réessayer.",
+    "networkError": "Erreur réseau. Veuillez vérifier votre connexion.",
+    "serverError": "Erreur serveur. Veuillez réessayer plus tard."
+  },
+  "stopGeneration": "Arrêter"
+}

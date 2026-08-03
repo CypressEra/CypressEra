@@ -1,0 +1,80 @@
+{
+  "title": "Paramètres du calcul de flux de puissance AC",
+  "groups": {
+    "convergence": "Convergence",
+    "initialization": "Initialisation",
+    "control": "Contrôle",
+    "solutionOptions": "Options de résolution"
+  },
+  "fields": {
+    "tolerance": {
+      "label": "Tolérance de convergence",
+      "description": "Déséquilibre de puissance max (p.u.) pour la convergence. Laisser vide pour utiliser la valeur du modèle ou la valeur par défaut du solveur.",
+      "placeholder": "ex. 1e-6"
+    },
+    "max_iterations": {
+      "label": "Itérations maximales",
+      "description": "Nombre max d'itérations Newton-Raphson par résolution.",
+      "placeholder": "ex. 100"
+    },
+    "flat_start": {
+      "label": "Démarrage à plat",
+      "description": "Initialiser toutes les tensions à 1,0∠0°."
+    },
+    "max_outerloop_iterations": {
+      "label": "Itérations max. de boucle externe",
+      "description": "Itérations max pour le contrôle de puissance réactive et de tension.",
+      "placeholder": "ex. 20"
+    },
+    "control_tolerance": {
+      "label": "Tolérance de limite Q",
+      "description": "Marge acceptable de violation de limite Q.",
+      "unit": "MVAr",
+      "placeholder": "ex. 0,1"
+    },
+    "tap_adjustment": {
+      "label": "Ajustement de prise",
+      "description": "Contrôle comment les prises du transformateur sont ajustées pendant la boucle externe.",
+      "options": {
+        "locked": "Verrouillé",
+        "stepping": "Pas à pas",
+        "direct": "Direct"
+      }
+    },
+    "phase_shift_adjustment": {
+      "label": "Ajustement déphaseur",
+      "description": "Active le contrôle automatique des transformateurs déphaseurs."
+    },
+    "dc_tap_adjustment": {
+      "label": "Ajustement de prise DC",
+      "description": "Active l'ajustement de prise pour les liaisons DC classiques à deux bornes."
+    },
+    "switched_shunt_adjustment": {
+      "label": "Ajustement de shunt commuté",
+      "description": "Contrôle quels shunts commutés sont autorisés à s'ajuster pendant la résolution.",
+      "options": {
+        "lock_all": "Tout verrouiller",
+        "enable_all": "Tout activer",
+        "continuous_only": "Continus uniquement"
+      }
+    },
+    "area_interchange_adjustment": {
+      "label": "Ajustement d'échange de zone",
+      "description": "Ajuste le générateur d'équilibre de chaque zone pour atteindre son échange net programmé. Désactivé par défaut.",
+      "options": {
+        "disabled": "Désactivé",
+        "tie_lines_only": "Lignes d'interconnexion uniquement",
+        "tie_lines_and_loads": "Lignes d'interconnexion et charges"
+      }
+    }
+  },
+  "buttons": {
+    "resetToDefaults": "Valeurs par défaut",
+    "close": "Fermer"
+  },
+  "validation": {
+    "positiveNumber": "Doit être un nombre positif",
+    "positiveInteger": "Doit être un entier positif",
+    "invalidNumber": "Nombre invalide"
+  }
+}

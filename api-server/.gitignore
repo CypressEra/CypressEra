@@ -1,0 +1,14 @@
+# Ignore data directory (user files are now stored in user-data at project root)
+data/
+
+# Build artifacts
+api-server
+bin/
+
+# Environment files
+.env
+
+main
+
+# Runtime logs
+logs/*.log

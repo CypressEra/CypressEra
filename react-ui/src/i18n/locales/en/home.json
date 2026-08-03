@@ -1,0 +1,30 @@
+{
+  "title": "Power Flow Solver",
+  "subtitle": "Upload RAWX files and run DC power flow calculations",
+  "systemSummary": "System Summary",
+  "busResults": "Bus Results",
+  "branchResults": "Branch Results",
+  "metrics": {
+    "totalLoad": "Total Load (MW)",
+    "totalGeneration": "Total Generation (MW)",
+    "totalLosses": "Total Losses (MW)",
+    "efficiency": "Efficiency"
+  },
+  "table": {
+    "busNumber": "Bus #",
+    "voltage": "Voltage (pu)",
+    "angle": "Angle (deg)",
+    "pInjection": "P Injection (MW)",
+    "qInjection": "Q Injection (MVAr)",
+    "fromBus": "From Bus",
+    "toBus": "To Bus",
+    "pFlow": "P Flow (MW)",
+    "qFlow": "Q Flow (MVAr)",
+    "sFlow": "S Flow (MVA)",
+    "losses": "Losses (MW)"
+  },
+  "method": {
+    "dc": "DC Power Flow",
+    "notImplemented": "AC power flow not yet implemented"
+  }
+}

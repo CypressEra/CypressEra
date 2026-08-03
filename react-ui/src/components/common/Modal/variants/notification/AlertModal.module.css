@@ -1,0 +1,48 @@
+.notificationContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 8px 0px 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+}
+
+.message {
+  margin: 0;
+  line-height: 1.47;
+  font-size: 13px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  font-weight: 400;
+  color: var(--modal-text, #1d1d1f);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  width: 100%;
+  letter-spacing: -0.08px;
+  max-width: 340px;
+}
+
+.button {
+  margin-top: 20px;
+  flex-shrink: 0;
+  min-width: 80px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.01px;
+}
+
+:global(html.dark) .message {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+@media (prefers-color-scheme: dark) {
+  .message {
+    color: rgba(255, 255, 255, 0.85);
+  }
+}

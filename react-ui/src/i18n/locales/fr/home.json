@@ -1,0 +1,30 @@
+{
+  "title": "Solveur de Flux de Puissance",
+  "subtitle": "Téléchargez des fichiers RAWX et exécutez des calculs de flux de puissance DC",
+  "systemSummary": "Résumé du Système",
+  "busResults": "Résultats des Nœuds",
+  "branchResults": "Résultats des Branches",
+  "metrics": {
+    "totalLoad": "Charge Totale (MW)",
+    "totalGeneration": "Génération Totale (MW)",
+    "totalLosses": "Pertes Totales (MW)",
+    "efficiency": "Efficacité"
+  },
+  "table": {
+    "busNumber": "N° Nœud",
+    "voltage": "Tension (pu)",
+    "angle": "Angle (deg)",
+    "pInjection": "Injection P (MW)",
+    "qInjection": "Injection Q (MVAr)",
+    "fromBus": "Du Nœud",
+    "toBus": "Au Nœud",
+    "pFlow": "Flux P (MW)",
+    "qFlow": "Flux Q (MVAr)",
+    "sFlow": "Flux S (MVA)",
+    "losses": "Pertes (MW)"
+  },
+  "method": {
+    "dc": "Flux de Puissance DC",
+    "notImplemented": "Flux de puissance AC pas encore implémenté"
+  }
+}

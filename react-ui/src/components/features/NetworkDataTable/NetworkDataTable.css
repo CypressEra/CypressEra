@@ -1,0 +1,882 @@
+.network-data-table {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-primary);
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+  position: relative;
+}
+
+.network-data-table.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.empty-icon {
+  display: block;
+  margin: 0 auto 16px;
+  opacity: 0.5;
+  color: var(--text-secondary);
+}
+
+.empty-state p {
+  margin: 8px 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.empty-state small {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  transition: color 0.3s ease;
+}
+
+/* Tabs Navigation Container */
+.tabs-navigation {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0px 0 0 0;
+  border-bottom: 2px solid var(--border-primary);
+  flex-shrink: 0;
+  transition: border-color 0.3s ease;
+}
+
+.nav-btn {
+  flex-shrink: 0;
+  width: 28px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  border-radius: 4px;
+}
+
+.nav-btn-left {
+  margin-left: 4px;
+}
+
+.nav-btn-right {
+  margin-right: 4px;
+}
+
+.nav-btn:hover {
+  background: rgba(0, 122, 255, 0.08);
+  color: #007AFF;
+}
+
+.nav-btn:active {
+  transform: scale(0.9);
+}
+
+/* Element Type Tabs */
+.element-tabs {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex: 1;
+  padding: 0 4px;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.element-tabs::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
+}
+
+.element-tab {
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.element-tab:hover {
+  color: #007AFF;
+  background: rgba(0, 122, 255, 0.05);
+}
+
+.element-tab.active {
+  color: #007AFF;
+  border-bottom-color: #007AFF;
+}
+
+.element-tab .count {
+  background: #007AFF;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 600;
+  min-width: 20px;
+  text-align: center;
+}
+
+.element-tab:not(.active) .count {
+  background: var(--text-tertiary);
+}
+
+/* Add Element Button in Table Header - macOS Style */
+.add-element-btn-wrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.add-element-btn {
+  width: 22px;
+  height: 22px;
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #86868b;
+  transition: all 0.15s ease;
+  box-shadow: 
+    0 0.5px 1px rgba(0, 0, 0, 0.04),
+    0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.add-element-btn:hover {
+  background: linear-gradient(180deg, #f8f8f8 0%, #ebebeb 100%);
+  color: #1d1d1f;
+  box-shadow: 
+    0 0.5px 1px rgba(0, 0, 0, 0.06),
+    0 1.5px 3px rgba(0, 0, 0, 0.08);
+}
+
+.add-element-btn:active {
+  background: linear-gradient(180deg, #e8e8e8 0%, #d8d8d8 100%);
+  box-shadow: 
+    0 0.5px 1px rgba(0, 0, 0, 0.08),
+    inset 0 0.5px 1px rgba(0, 0, 0, 0.06);
+}
+
+/* Tooltip for Add Element Button */
+.add-element-tooltip {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  transform: translateY(-4px);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px var(--shadow-secondary);
+  z-index: 1000;
+  border: 1px solid var(--border-secondary);
+  text-transform: none;
+}
+
+.add-element-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 8px;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid var(--border-secondary);
+}
+
+.add-element-tooltip::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 9px;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid var(--bg-tertiary);
+}
+
+.add-element-btn-wrapper:hover .add-element-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition-delay: 0.3s;
+}
+
+/* Dark mode support */
+:global(html.dark) .add-element-btn {
+  background: linear-gradient(180deg, #3a3a3c 0%, #2c2c2e 100%);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #98989d;
+  box-shadow: 
+    0 0.5px 1px rgba(0, 0, 0, 0.2),
+    0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+:global(html.dark) .add-element-btn:hover {
+  background: linear-gradient(180deg, #323234 0%, #252527 100%);
+  color: #f5f5f7;
+  box-shadow: 
+    0 0.5px 1px rgba(0, 0, 0, 0.25),
+    0 1.5px 3px rgba(0, 0, 0, 0.2);
+}
+
+:global(html.dark) .add-element-btn:active {
+  background: linear-gradient(180deg, #2c2c2e 0%, #1e1e20 100%);
+}
+
+@media (prefers-color-scheme: dark) {
+  .add-element-btn {
+    background: linear-gradient(180deg, #3a3a3c 0%, #2c2c2e 100%);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #98989d;
+    box-shadow: 
+      0 0.5px 1px rgba(0, 0, 0, 0.2),
+      0 1px 2px rgba(0, 0, 0, 0.15);
+  }
+
+  .add-element-btn:hover {
+    background: linear-gradient(180deg, #323234 0%, #252527 100%);
+    color: #f5f5f7;
+    box-shadow: 
+      0 0.5px 1px rgba(0, 0, 0, 0.25),
+      0 1.5px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  .add-element-btn:active {
+    background: linear-gradient(180deg, #2c2c2e 0%, #1e1e20 100%);
+  }
+}
+
+/* Table Wrapper */
+.table-wrapper {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+  padding-bottom: 4px;
+  /* GPU acceleration for smoother scrolling */
+  will-change: scroll-position;
+  -webkit-overflow-scrolling: touch;
+  /* Reduce paint during scroll */
+  contain: content;
+}
+
+/* Custom scrollbar styling */
+.table-wrapper::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Dark mode scrollbar */
+html.dark .table-wrapper::-webkit-scrollbar-thumb,
+.dark .table-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+html.dark .table-wrapper::-webkit-scrollbar-thumb:hover,
+.dark .table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.virtual-table-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.no-data {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+  font-size: 14px;
+}
+
+/* Table Content Container */
+.table-content {
+  width: max-content;
+  min-width: 100%;
+  /* GPU acceleration */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Single data table: header and body share columns so widths always match */
+.data-table {
+  border-collapse: collapse;
+  font-size: 12px;
+  background: var(--bg-primary);
+  transition: background-color 0.3s ease;
+  /* Optimize table rendering */
+  table-layout: fixed;
+}
+
+.data-table tbody {
+  /* Reduce layout thrashing during scroll */
+  contain: content;
+}
+
+/* Virtual rows - skip rendering when off-screen */
+.data-table tbody tr.virtual-row {
+  /* content-visibility: auto tells browser to skip rendering when off-screen */
+  content-visibility: auto;
+  /* contain-intrinsic-size hints the browser about the row height */
+  contain-intrinsic-size: 32px;
+}
+
+.data-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg-tertiary);
+  transition: background-color 0.3s ease;
+}
+
+.data-table th,
+.data-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  max-width: 0; /* keep cell within column width so long text doesn't spill */
+}
+
+.data-table th {
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-primary);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  background: var(--bg-tertiary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+  vertical-align: middle;
+}
+
+/* Header cell tooltip for truncated column names – modeled after AI Assistant knowledge button */
+.data-table th.header-cell {
+  position: relative;
+  overflow: visible; /* allow tooltip to extend outside cell */
+}
+
+.header-label {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.header-tooltip {
+  position: absolute;
+  top: calc(100% - 8px); /* show below the header cell */
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px var(--shadow-secondary);
+  z-index: 1000;
+  border: 1px solid var(--border-secondary);
+}
+
+.header-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid var(--border-secondary); /* outer border for arrow */
+}
+
+.header-tooltip::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid var(--bg-tertiary); /* inner fill to match tooltip bg */
+}
+
+.data-table th.header-cell.has-tooltip:hover .header-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  transition-delay: 0.1s;
+}
+
+.data-table td {
+  color: var(--text-primary);
+  font-family: 'Monaco', 'Consolas', monospace;
+  font-size: 11px;
+  height: 32px;
+  transition: color 0.3s ease;
+}
+
+.data-table tbody tr:hover {
+  background: rgba(0, 122, 255, 0.03);
+}
+
+/* Disable hover effects during scroll for better performance */
+.table-wrapper.scrolling .data-table tbody tr:hover {
+  background: transparent;
+}
+
+.table-wrapper.scrolling .data-table tbody tr:nth-child(even):hover {
+  background: var(--bg-secondary);
+}
+
+.data-table tbody tr:nth-child(even) {
+  background: var(--bg-secondary);
+}
+
+.data-table tbody tr:nth-child(even):hover {
+  background: rgba(0, 122, 255, 0.05);
+}
+
+.data-table .row-number {
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-align: center;
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px !important; /* override max-width: 0 so # column stays fixed */
+  border-right: 1px solid var(--border-primary);
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.data-table thead .row-number {
+  background: var(--bg-tertiary);
+  z-index: 20;
+  overflow: visible;
+  transition: background-color 0.3s ease;
+}
+
+.data-table tbody .row-number {
+  background: var(--bg-primary);
+  transition: background-color 0.3s ease;
+}
+
+.data-table tbody tr:nth-child(even) .row-number {
+  background: var(--bg-secondary);
+}
+
+.data-table tbody tr:hover .row-number {
+  background: var(--bg-primary);
+  z-index: 15;
+}
+
+.data-table tbody tr:nth-child(even):hover .row-number {
+  background: var(--bg-secondary);
+  z-index: 15;
+}
+
+/* Changes Toolbar - macOS Style */
+.changes-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: linear-gradient(180deg, 
+    rgba(255, 204, 0, 0.12) 0%, 
+    rgba(255, 204, 0, 0.08) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 204, 0, 0.25);
+  box-shadow: 
+    0 1px 3px rgba(255, 204, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.changes-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.changes-badge {
+  background: linear-gradient(135deg, #ff9500 0%, #ff7b00 100%);
+  color: white;
+  padding: 3px 10px;
+  border-radius: 14px;
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 26px;
+  text-align: center;
+  box-shadow: 
+    0 2px 8px rgba(255, 149, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  letter-spacing: 0.3px;
+}
+
+.changes-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.1px;
+}
+
+.reset-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  letter-spacing: -0.1px;
+}
+
+.reset-btn:hover {
+  background: linear-gradient(135deg, 
+    rgba(255, 59, 48, 0.12) 0%, 
+    rgba(255, 59, 48, 0.08) 100%);
+  color: #ff3b30;
+  box-shadow: 
+    0 2px 8px rgba(255, 59, 48, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+}
+
+.reset-btn:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 
+    0 1px 2px rgba(255, 59, 48, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Editable Cell Styles - macOS Style */
+.data-table td {
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+  transition: background 0.2s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.data-table .row-number {
+  cursor: default;
+}
+
+.identifier-cell {
+  cursor: default !important;
+  opacity: 0.7;
+  font-weight: 600;
+}
+
+.power-flow-field {
+  cursor: default !important;
+  opacity: 0.85;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.edited-cell {
+  background: linear-gradient(135deg, 
+    rgba(255, 204, 0, 0.18) 0%, 
+    rgba(255, 204, 0, 0.12) 100%) !important;
+  box-shadow: 
+    inset 3px 0 0 0 #ff9500,
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 6px 0 8px rgba(255, 149, 0, 0.15) !important;
+  animation: cellHighlight 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes cellHighlight {
+  0% {
+    background: rgba(255, 204, 0, 0.4);
+  }
+  50% {
+    background: rgba(255, 204, 0, 0.25);
+  }
+  100% {
+    background: linear-gradient(135deg, 
+      rgba(255, 204, 0, 0.18) 0%, 
+      rgba(255, 204, 0, 0.12) 100%);
+  }
+}
+
+.editing-cell {
+  position: relative !important;
+  background: linear-gradient(135deg, 
+    rgba(0, 122, 255, 0.12) 0%, 
+    rgba(0, 122, 255, 0.08) 100%) !important;
+  box-shadow: inset 0 0 0 2px rgba(0, 122, 255, 0.4) !important;
+  animation: cellFocusIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes cellFocusIn {
+  from {
+    box-shadow: inset 0 0 0 0px rgba(0, 122, 255, 0);
+  }
+  to {
+    box-shadow: inset 0 0 0 2px rgba(0, 122, 255, 0.4);
+  }
+}
+
+.cell-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  padding: 8px 12px;
+  margin: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: 'Monaco', 'Consolas', monospace;
+  font-size: 11px;
+  outline: none;
+  box-sizing: border-box;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.cell-input::selection {
+  background: rgba(0, 122, 255, 0.3);
+}
+
+.edit-indicator {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(135deg, #ff9500 0%, #ff7b00 100%);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.3),
+    0 2px 4px rgba(255, 149, 0, 0.4);
+  pointer-events: none;
+  animation: indicatorPulse 2s ease-in-out infinite;
+}
+
+@keyframes indicatorPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+.data-table tbody tr:hover td:not(.row-number):not(.editing-cell):not(.edited-cell):not(.identifier-cell):not(.power-flow-field) {
+  background: rgba(0, 122, 255, 0.04);
+}
+
+.data-table tbody tr:nth-child(even):hover td:not(.row-number):not(.editing-cell):not(.edited-cell):not(.identifier-cell):not(.power-flow-field) {
+  background: rgba(0, 122, 255, 0.06);
+}
+
+.data-table tbody tr:hover td:not(.row-number):not(.editing-cell).edited-cell {
+  background: linear-gradient(135deg, 
+    rgba(255, 204, 0, 0.22) 0%, 
+    rgba(255, 204, 0, 0.16) 100%) !important;
+  box-shadow: 
+    inset 3px 0 0 0 #ff9500,
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 6px 0 10px rgba(255, 149, 0, 0.2) !important;
+}
+
+/* Changes Action Bar - Bottom Right Floating */
+.changes-action-bar {
+  position: absolute;
+  bottom: 24px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 1000;
+}
+
+.changes-action-bar .btn-reset,
+.changes-action-bar .btn-save {
+  padding: 4px 14px;
+  border: none;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  min-width: 70px;
+  height: 26px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.changes-action-bar .btn-reset {
+  background: linear-gradient(180deg, #fafafa 0%, #ececec 100%);
+  color: #1d1d1f;
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    0 0.5px 1px rgba(0, 0, 0, 0.06),
+    0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.changes-action-bar .btn-reset:hover:not(:disabled) {
+  background: linear-gradient(180deg, #e8e8e8 0%, #d8d8d8 100%);
+  box-shadow: 
+    0 0.5px 1px rgba(0, 0, 0, 0.1),
+    0 1.5px 3px rgba(0, 0, 0, 0.08);
+}
+
+.changes-action-bar .btn-reset:active:not(:disabled) {
+  background: linear-gradient(180deg, #e8e8e8 0%, #d8d8d8 100%);
+  transform: scale(0.97);
+}
+
+.changes-action-bar .btn-save {
+  background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+}
+
+.changes-action-bar .btn-save:hover:not(:disabled) {
+  background: linear-gradient(135deg, #0062CC 0%, #0040AA 100%);
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.4);
+}
+
+.changes-action-bar .btn-save:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.changes-action-bar button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Dark mode support for Cancel button */
+:global(html.dark) .changes-action-bar .btn-reset {
+  background: linear-gradient(180deg, #3a3a3c 0%, #2c2c2e 100%);
+  color: #f5f5f7;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+:global(html.dark) .changes-action-bar .btn-reset:hover:not(:disabled) {
+  background: linear-gradient(180deg, #323234 0%, #252527 100%);
+  box-shadow: 
+    0 0.5px 1px rgba(0, 0, 0, 0.2),
+    0 1.5px 3px rgba(0, 0, 0, 0.15);
+}
+
+:global(html.dark) .changes-action-bar .btn-reset:active:not(:disabled) {
+  background: linear-gradient(180deg, #2c2c2e 0%, #1e1e20 100%);
+}
+
+@media (prefers-color-scheme: dark) {
+  .changes-action-bar .btn-reset {
+    background: linear-gradient(180deg, #3a3a3c 0%, #2c2c2e 100%);
+    color: #f5f5f7;
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .changes-action-bar .btn-reset:hover:not(:disabled) {
+    background: linear-gradient(180deg, #323234 0%, #252527 100%);
+    box-shadow: 
+      0 0.5px 1px rgba(0, 0, 0, 0.2),
+      0 1.5px 3px rgba(0, 0, 0, 0.15);
+  }
+
+  .changes-action-bar .btn-reset:active:not(:disabled) {
+    background: linear-gradient(180deg, #2c2c2e 0%, #1e1e20 100%);
+  }
+}
+

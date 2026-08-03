@@ -1,0 +1,472 @@
+/**
+ * Example App.tsx with i18n implementation
+ * 
+ * This file demonstrates how to use translations in your React components.
+ * Replace your existing App.tsx with this content to enable internationalization.
+ */
+
+import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import './App.css';
+import LanguageSwitcher from './components/LanguageSwitcher';
+
+interface PowerFlowResult {
+  converged: boolean;
+  solution_time_ms: number;
+  bus_results: Array<{
+    bus_number: number;
+    voltage_mag: number;
+    voltage_angle_deg: number;
+    net_p_injection: number;
+    net_q_injection: number;
+  }>;
+  branch_results: Array<{
+    from_bus: number;
+    to_bus: number;
+    id: string;
+    p_flow: number;
+    q_flow: number;
+    s_flow: number;
+    power_loss: number;
+  }>;
+  system_summary: {
+    total_load_mw: number;
+    total_generation_mw: number;
+    total_losses_mw: number;
+    efficiency_percent: number;
+  };
+}
+
+function App() {
+  // i18n hook
+  const { t } = useTranslation(['home', 'common', 'errors']);
+  
+  const [file, setFile] = useState<File | null>(null);
+  const [sessionId, setSessionId] = useState<string>('');
+  const [userId] = useState<string>('demo_user');
+  const [isLoading, setIsLoading] = useState(false);
+  const [results, setResults] = useState<PowerFlowResult | null>(null);
+  const [error, setError] = useState<string>('');
+  const [method, setMethod] = useState<string>('dc');
+  const [healthStatus, setHealthStatus] = useState<'checking' | 'healthy' | 'unhealthy' | 'unknown'>('unknown');
+  const [healthMessage, setHealthMessage] = useState<string>('');
+
+  // Check health on component mount
+  useEffect(() => {
+    checkHealth();
+  }, []);
+
+  const checkHealth = async () => {
+    setHealthStatus('checking');
+    setHealthMessage(t('common:buttons.checking'));
+    
+    try {
+      const response = await fetch('http://localhost:8080/health', {
+        method: 'GET',
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setHealthStatus('healthy');
+        setHealthMessage(data.message || t('common:status.healthy'));
+      } else {
+        setHealthStatus('unhealthy');
+        setHealthMessage(t('errors:serverStatus', { status: response.status }));
+      }
+    } catch (err) {
+      setHealthStatus('unhealthy');
+      setHealthMessage(t('errors:serverConnection'));
+      console.error('Health check error:', err);
+    }
+  };
+
+  const createSession = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/v1/sessions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user_id: userId }),
+      });
+
+      if (!response.ok) {
+        throw new Error(t('errors:createSessionFailed'));
+      }
+
+      const data = await response.json();
+      setSessionId(data.session_id);
+      setError('');
+    } catch (err) {
+      setError(t('errors:createSessionFailed'));
+      console.error(err);
+    }
+  };
+
+  const uploadFile = async () => {
+    if (!file || !sessionId) {
+      setError(t('errors:fileSelection'));
+      return;
+    }
+
+    setIsLoading(true);
+    setError('');
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('user_id', userId);
+      const response = await fetch(
+        `http://localhost:8080/api/v1/upload?session_id=${sessionId}`,
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(t('errors:uploadFailed'));
+      }
+
+      setError('');
+    } catch (err) {
+      setError(t('errors:uploadFailed'));
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const runPowerFlow = async () => {
+    if (!sessionId) {
+      setError(t('errors:sessionRequired'));
+      return;
+    }
+
+    setIsLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:8080/api/v1/calculate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          session_id: sessionId,
+          config: {
+            method: method
+          }
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(t('errors:calculationFailed'));
+      }
+
+      const data = await response.json();
+      
+      console.log('Power flow calculation response:', data);
+      
+      if (data.results) {
+        console.log('Results received directly:', data.results);
+        setResults(data.results);
+      } else {
+        console.error('No results in response:', data);
+        setError(t('errors:noResults'));
+      }
+
+      setError('');
+    } catch (err) {
+      setError(t('errors:calculationFailed'));
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile && selectedFile.name.endsWith('.rawx')) {
+      setFile(selectedFile);
+      setError('');
+    } else {
+      setError(t('errors:invalidFile'));
+      setFile(null);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header with Language Switcher */}
+        <div className="text-center mb-8">
+          <div className="flex justify-end mb-4">
+            <LanguageSwitcher />
+          </div>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            {t('home:title')}
+          </h1>
+          <p className="text-lg text-gray-600">
+            {t('home:subtitle')}
+          </p>
+        </div>
+
+        {/* Health Status */}
+        <div className="bg-white rounded-lg shadow-lg p-4 mb-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className={`w-3 h-3 rounded-full ${
+                healthStatus === 'healthy' ? 'bg-green-500' :
+                healthStatus === 'unhealthy' ? 'bg-red-500' :
+                healthStatus === 'checking' ? 'bg-yellow-500 animate-pulse' :
+                'bg-gray-400'
+              }`}></div>
+              <div>
+                <span className="text-sm font-medium text-gray-700">
+                  {t('common:labels.serverStatus')}: 
+                </span>
+                <span className={`ml-2 text-sm font-semibold ${
+                  healthStatus === 'healthy' ? 'text-green-600' :
+                  healthStatus === 'unhealthy' ? 'text-red-600' :
+                  healthStatus === 'checking' ? 'text-yellow-600' :
+                  'text-gray-600'
+                }`}>
+                  {t(`common:status.${healthStatus}`)}
+                </span>
+              </div>
+              {healthMessage && (
+                <span className="text-sm text-gray-500 ml-2">
+                  - {healthMessage}
+                </span>
+              )}
+            </div>
+            <button
+              onClick={checkHealth}
+              disabled={healthStatus === 'checking'}
+              className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white text-sm font-medium py-1 px-3 rounded transition-colors"
+            >
+              {healthStatus === 'checking' ? t('common:buttons.checking') : t('common:buttons.checkHealth')}
+            </button>
+          </div>
+        </div>
+
+        {/* Main Interface */}
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Session Management */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-gray-900">{t('common:labels.session')}</h3>
+              <button
+                onClick={createSession}
+                disabled={isLoading}
+                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium py-2 px-4 rounded-md transition-colors"
+              >
+                {sessionId ? t('common:buttons.sessionCreated') : t('common:buttons.createSession')}
+              </button>
+              {sessionId && (
+                <div className="text-sm text-gray-600 bg-gray-100 p-2 rounded">
+                  {t('common:labels.sessionId')}: {sessionId.slice(0, 8)}...
+                </div>
+              )}
+            </div>
+
+            {/* File Upload */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-gray-900">{t('common:labels.fileUpload')}</h3>
+              <input
+                type="file"
+                accept=".rawx"
+                onChange={handleFileChange}
+                className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              />
+              <button
+                onClick={uploadFile}
+                disabled={!file || !sessionId || isLoading}
+                className="w-full bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white font-medium py-2 px-4 rounded-md transition-colors"
+              >
+                {t('common:buttons.uploadFile')}
+              </button>
+            </div>
+
+            {/* Power Flow Calculation */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-gray-900">{t('common:labels.calculation')}</h3>
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  {t('common:labels.method')}
+                </label>
+                <select
+                  value={method}
+                  onChange={(e) => setMethod(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                >
+                  <option value="dc">{t('home:method.dc')}</option>
+                </select>
+                <p className="text-xs text-gray-500">
+                  {t('home:method.notImplemented')}
+                </p>
+              </div>
+              <button
+                onClick={runPowerFlow}
+                disabled={!sessionId || isLoading}
+                className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-purple-400 text-white font-medium py-2 px-4 rounded-md transition-colors"
+              >
+                {isLoading ? t('common:buttons.running') : t('common:buttons.runPowerFlow')}
+              </button>
+            </div>
+          </div>
+
+          {/* Error Display */}
+          {error && (
+            <div className="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-md">
+              {error}
+            </div>
+          )}
+        </div>
+
+        {/* Results Display */}
+        {results && (
+          <div className="space-y-6">
+            {/* System Summary */}
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">{t('home:systemSummary')}</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-blue-600">
+                    {results.system_summary.total_load_mw.toFixed(2)}
+                  </div>
+                  <div className="text-sm text-gray-600">{t('home:metrics.totalLoad')}</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-green-600">
+                    {results.system_summary.total_generation_mw.toFixed(2)}
+                  </div>
+                  <div className="text-sm text-gray-600">{t('home:metrics.totalGeneration')}</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-red-600">
+                    {results.system_summary.total_losses_mw.toFixed(2)}
+                  </div>
+                  <div className="text-sm text-gray-600">{t('home:metrics.totalLosses')}</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-purple-600">
+                    {results.system_summary.efficiency_percent.toFixed(2)}%
+                  </div>
+                  <div className="text-sm text-gray-600">{t('home:metrics.efficiency')}</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Bus Results Table */}
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">{t('home:busResults')}</h3>
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        {t('home:table.busNumber')}
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        {t('home:table.voltage')}
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        {t('home:table.angle')}
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        {t('home:table.pInjection')}
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        {t('home:table.qInjection')}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {results.bus_results.map((bus, index) => (
+                      <tr key={index} className="hover:bg-gray-50">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          {bus.bus_number}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {bus.voltage_mag.toFixed(3)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {bus.voltage_angle_deg.toFixed(2)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {bus.net_p_injection.toFixed(2)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {bus.net_q_injection.toFixed(2)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Branch Results Table */}
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">{t('home:branchResults')}</h3>
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        {t('home:table.fromBus')}
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        {t('home:table.toBus')}
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        {t('home:table.pFlow')}
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        {t('home:table.qFlow')}
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        {t('home:table.sFlow')}
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        {t('home:table.losses')}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {results.branch_results.map((branch, index) => (
+                      <tr key={index} className="hover:bg-gray-50">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          {branch.from_bus}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          {branch.to_bus}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {branch.p_flow.toFixed(2)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {branch.q_flow.toFixed(2)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {branch.s_flow.toFixed(2)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {branch.power_loss.toFixed(2)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default App;

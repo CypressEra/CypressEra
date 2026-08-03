@@ -1,0 +1,559 @@
+/**
+ * Network Diagram Styles
+ * Professional styling for power system visualization
+ */
+
+.network-diagram {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  overflow: hidden;
+  /* Inherit global app font stack (same as NetworkDataTable) */
+  font-family: inherit;
+}
+
+/* ==================== Toolbar ==================== */
+
+.network-diagram-toolbar {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background: linear-gradient(to bottom, #f8f9fa, #f1f3f4);
+  border-bottom: 1px solid #dcdcdc;
+  min-height: 40px;
+  user-select: none;
+}
+
+.network-diagram-toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.network-diagram-toolbar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 28px;
+  padding: 0;
+  background: #ffffff;
+  border: 1px solid #c4c4c4;
+  border-radius: 3px;
+  cursor: pointer;
+  color: #444444;
+  transition: all 0.15s ease;
+}
+
+.network-diagram-toolbar-btn:hover {
+  background: #f0f0f0;
+  border-color: #999999;
+}
+
+.network-diagram-toolbar-btn:active {
+  background: #e0e0e0;
+  border-color: #666666;
+  transform: translateY(1px);
+}
+
+.network-diagram-toolbar-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.network-diagram-toolbar-btn svg {
+  pointer-events: none;
+}
+
+.network-diagram-toolbar-divider {
+  width: 1px;
+  height: 20px;
+  margin: 0 8px;
+  background: linear-gradient(to bottom, transparent, #c4c4c4, transparent);
+}
+
+.network-diagram-toolbar-spacer {
+  flex: 1;
+}
+
+.network-diagram-zoom-indicator {
+  min-width: 50px;
+  text-align: center;
+  font-size: 11px;
+  color: #666666;
+  font-weight: 500;
+}
+
+.network-diagram-info {
+  font-size: 11px;
+  color: #666666;
+  font-weight: 500;
+}
+
+/* ==================== Canvas Container ==================== */
+
+.network-diagram-canvas-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+  min-height: 400px;
+  min-width: 600px;
+}
+
+/* Light mode: very light gray Mac-style diagram background */
+.network-diagram[data-theme="light"] .network-diagram-canvas-container {
+  background: #fafafa;
+}
+
+.network-diagram[data-theme="dark"] .network-diagram-canvas-container {
+  background: #1a1a1a;
+}
+
+.network-diagram-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+
+.network-diagram-canvas:active {
+  cursor: grabbing;
+}
+
+/* ==================== Status Bar ==================== */
+
+.network-diagram-statusbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 6px 12px;
+  background: linear-gradient(to top, #f8f9fa, #f1f3f4);
+  border-top: 1px solid #dcdcdc;
+  min-height: 28px;
+  font-size: 11px;
+}
+
+.network-diagram-statusbar-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.network-diagram-statusbar-label {
+  color: #888888;
+  font-weight: 500;
+}
+
+.network-diagram-statusbar-value {
+  color: #444444;
+  font-weight: 600;
+}
+
+.network-diagram-statusbar-value.converged {
+  color: #27ae60;
+}
+
+.network-diagram-statusbar-value.diverged {
+  color: #c0392b;
+}
+
+/* ==================== Loading State ==================== */
+
+.network-diagram.loading .network-diagram-canvas-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.network-diagram.loading .network-diagram-canvas-container::after {
+  content: '';
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e0e0e0;
+  border-top-color: #3498db;
+  border-radius: 50%;
+  animation: network-diagram-spin 0.8s linear infinite;
+}
+
+@keyframes network-diagram-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==================== Empty State ==================== */
+
+.network-diagram.empty .network-diagram-canvas-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.network-diagram.empty .network-diagram-canvas-container::before {
+  content: '📊';
+  font-size: 48px;
+  opacity: 0.5;
+}
+
+.network-diagram.empty .network-diagram-canvas-container::after {
+  content: 'No network data loaded';
+  font-size: 13px;
+  color: #888888;
+}
+
+/* ==================== Network Diagram Empty State ==================== */
+
+.network-diagram-empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  background: var(--bg-primary);
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.empty-icon {
+  display: block;
+  margin: 0 auto 16px;
+  opacity: 0.5;
+  color: var(--text-secondary);
+}
+
+.empty-state p {
+  margin: 8px 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.empty-state small {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  transition: color 0.3s ease;
+}
+
+/* ==================== Tooltip ==================== */
+
+.network-diagram-tooltip {
+  position: absolute;
+  padding: 8px 12px;
+  background: rgba(44, 62, 80, 0.95);
+  color: #ffffff;
+  font-size: 12px;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 1000;
+  max-width: 300px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.network-diagram-tooltip-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.network-diagram-tooltip-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 2px 0;
+}
+
+.network-diagram-tooltip-label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.network-diagram-tooltip-value {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* ==================== Legend ==================== */
+
+.network-diagram-legend {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-size: 11px;
+  z-index: 100;
+}
+
+.network-diagram-legend-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #444444;
+}
+
+.network-diagram-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 0;
+}
+
+.network-diagram-legend-symbol {
+  width: 20px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.network-diagram-legend-bus {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+}
+
+.network-diagram-legend-label {
+  color: #666666;
+}
+
+/* ==================== Mini Map ==================== */
+
+.network-diagram-minimap {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 150px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.network-diagram-minimap-viewport {
+  position: absolute;
+  border: 2px solid #3498db;
+  background: rgba(52, 152, 219, 0.1);
+  pointer-events: none;
+}
+
+/* ==================== Responsive ==================== */
+
+@media (max-width: 768px) {
+  .network-diagram-toolbar {
+    padding: 6px 8px;
+  }
+
+  .network-diagram-toolbar-btn {
+    width: 28px;
+    height: 24px;
+  }
+
+  .network-diagram-toolbar-divider {
+    margin: 0 4px;
+  }
+
+  .network-diagram-info {
+    display: none;
+  }
+
+  .network-diagram-legend {
+    display: none;
+  }
+
+  .network-diagram-minimap {
+    display: none;
+  }
+}
+
+/* ==================== Print Styles ==================== */
+
+@media print {
+  .network-diagram {
+    border: none;
+  }
+
+  .network-diagram-toolbar,
+  .network-diagram-statusbar {
+    display: none;
+  }
+
+  .network-diagram-canvas {
+    border: 1px solid #cccccc;
+  }
+}
+
+/* ==================== Dark Mode Support ==================== */
+
+@media (prefers-color-scheme: dark) {
+  .network-diagram {
+    background: #1a1a1a;
+    border-color: #333333;
+  }
+
+  .network-diagram-toolbar {
+    background: linear-gradient(to bottom, #2d2d2d, #252525);
+    border-bottom-color: #333333;
+  }
+
+  .network-diagram-toolbar-btn {
+    background: #3d3d3d;
+    border-color: #555555;
+    color: #e0e0e0;
+  }
+
+  .network-diagram-toolbar-btn:hover {
+    background: #4d4d4d;
+    border-color: #666666;
+  }
+
+  .network-diagram-toolbar-divider {
+    background: linear-gradient(to bottom, transparent, #555555, transparent);
+  }
+
+  .network-diagram-zoom-indicator,
+  .network-diagram-info {
+    color: #aaaaaa;
+  }
+
+  .network-diagram-statusbar {
+    background: linear-gradient(to top, #2d2d2d, #252525);
+    border-top-color: #333333;
+  }
+
+  .network-diagram-statusbar-label {
+    color: #888888;
+  }
+
+  .network-diagram-statusbar-value {
+    color: #e0e0e0;
+  }
+}
+
+/* ==================== High Contrast Mode ==================== */
+
+@media (prefers-contrast: high) {
+  .network-diagram {
+    border-width: 2px;
+  }
+
+  .network-diagram-toolbar-btn {
+    border-width: 2px;
+  }
+
+  .network-diagram-toolbar-divider {
+    background: #000000;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Large-network async compute: progress / error overlay              */
+/* ------------------------------------------------------------------ */
+.network-diagram-compute-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(1px);
+  z-index: 20;
+}
+
+.network-diagram[data-theme="dark"] .network-diagram-compute-overlay {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.network-diagram-compute-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 240px;
+  padding: 20px 24px;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  font-size: 13px;
+  color: #1d1d1f;
+}
+
+.network-diagram[data-theme="dark"] .network-diagram-compute-card {
+  background: #1e1e1e;
+  color: #f5f5f7;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.network-diagram-compute-title {
+  font-weight: 600;
+}
+
+.network-diagram-compute-progress {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.network-diagram[data-theme="dark"] .network-diagram-compute-progress {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.network-diagram-compute-bar {
+  height: 100%;
+  background: #0a84ff;
+  transition: width 0.15s ease-out;
+}
+
+.network-diagram-compute-percent {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.7;
+}
+
+.network-diagram-compute-cancel {
+  margin-top: 4px;
+  padding: 4px 14px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.network-diagram-compute-cancel:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.network-diagram[data-theme="dark"] .network-diagram-compute-cancel {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.network-diagram[data-theme="dark"] .network-diagram-compute-cancel:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.network-diagram-compute-card-error {
+  border: 1px solid rgba(255, 69, 58, 0.5);
+}
+
+.network-diagram-compute-detail {
+  max-width: 320px;
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.75;
+  word-break: break-word;
+}

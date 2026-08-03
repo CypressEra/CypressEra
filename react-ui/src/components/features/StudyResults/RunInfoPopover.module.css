@@ -1,0 +1,144 @@
+/* Same overlay/z-index tier and vibrancy treatment as ContextMenu. */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  background: transparent;
+  cursor: default;
+}
+
+/* Positioned wrapper: the arrow protrudes above the panel, so overflow
+   clipping (the panel scrolls) must live one level down. */
+.panelWrap {
+  position: fixed;
+  z-index: 10000;
+  width: 380px;
+  animation: popoverFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: top center;
+}
+
+/* NSPopover-style arrow: a rotated square sharing the panel's surface; its
+   lower half hides under the panel, leaving a seamless triangle pointing at
+   the anchor. */
+.arrow {
+  position: absolute;
+  z-index: 1; /* over the panel's top border — no seam across the connector */
+  top: -5px;
+  width: 12px;
+  height: 12px;
+  transform: rotate(45deg);
+  background: var(--menu-bg, rgba(245, 245, 247, 0.9));
+  border-left: 1px solid var(--border-secondary, rgba(120, 120, 128, 0.25));
+  border-top: 1px solid var(--border-secondary, rgba(120, 120, 128, 0.25));
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.panel {
+  position: relative;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--menu-bg, rgba(245, 245, 247, 0.9));
+  border: 1px solid var(--border-secondary, rgba(120, 120, 128, 0.25));
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 0.5px var(--border-secondary, rgba(120, 120, 128, 0.25)),
+    0 10px 30px var(--shadow-secondary, rgba(0, 0, 0, 0.2));
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+@keyframes popoverFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Get Info-style definition list: right-aligned grey labels, dark values. */
+.info {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 14px;
+  row-gap: 6px;
+  margin: 0;
+}
+
+.infoKey {
+  text-align: right;
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.infoVal {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-secondary, rgba(120, 120, 128, 0.14));
+}
+
+.sectionTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Power flow settings: many short key/value pairs flowed into columns. */
+.settingsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 4px 18px;
+}
+
+.settingItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+  font-size: 12px;
+}
+
+.settingKey {
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.settingVal {
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* A long key/value pair takes the full row and wraps its value — every
+   setting is always fully readable. */
+.settingItemWide {
+  grid-column: 1 / -1;
+}
+
+.settingItemWide .settingVal {
+  white-space: normal;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  text-align: right;
+}

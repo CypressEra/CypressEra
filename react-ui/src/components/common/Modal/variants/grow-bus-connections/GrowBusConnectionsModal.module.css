@@ -1,0 +1,182 @@
+/* macOS-inspired Grow Bus Connections Modal */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+}
+
+.sourceBus {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.sourceBus strong {
+  color: inherit;
+  font-weight: 600;
+}
+
+.modeGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: inherit;
+}
+
+.radio {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: #007aff;
+}
+
+.nInputRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 22px;
+}
+
+.numberInput {
+  width: 56px;
+  height: 28px;
+  padding: 0 8px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  background: rgba(0, 0, 0, 0.06);
+  color: inherit;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.numberInput:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.numberInput:focus {
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.nHint {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.busInputRow {
+  margin-left: 22px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  min-height: 28px;
+}
+
+.busNumberInput {
+  width: 140px;
+  flex-shrink: 0;
+  height: 28px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  background: rgba(0, 0, 0, 0.06);
+  color: inherit;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.busNumberInput::placeholder {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.busNumberInput:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.busNumberInput:focus {
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.busNumberInput:focus::placeholder {
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.validationHint {
+  font-size: 12px;
+  color: #d32f2f;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* Dark mode */
+:global(html.dark) .sourceBus,
+:global(.dark) .sourceBus {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+:global(html.dark) .numberInput,
+:global(.dark) .numberInput {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+:global(html.dark) .numberInput:hover,
+:global(.dark) .numberInput:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+:global(html.dark) .numberInput:focus,
+:global(.dark) .numberInput:focus {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 1px rgba(99, 179, 237, 0.4);
+}
+
+:global(html.dark) .nHint,
+:global(.dark) .nHint {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+:global(html.dark) .busNumberInput,
+:global(.dark) .busNumberInput {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+:global(html.dark) .busNumberInput::placeholder,
+:global(.dark) .busNumberInput::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+:global(html.dark) .busNumberInput:hover,
+:global(.dark) .busNumberInput:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+:global(html.dark) .busNumberInput:focus,
+:global(.dark) .busNumberInput:focus {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 1px rgba(99, 179, 237, 0.4);
+}
+
+:global(html.dark) .validationHint,
+:global(.dark) .validationHint {
+  color: #f28b82;
+}

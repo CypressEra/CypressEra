@@ -1,0 +1,30 @@
+{
+  "title": "Solucionador de Flujo de Potencia",
+  "subtitle": "Suba archivos RAWX y ejecute cálculos de flujo de potencia DC",
+  "systemSummary": "Resumen del Sistema",
+  "busResults": "Resultados de Barras",
+  "branchResults": "Resultados de Ramas",
+  "metrics": {
+    "totalLoad": "Carga Total (MW)",
+    "totalGeneration": "Generación Total (MW)",
+    "totalLosses": "Pérdidas Totales (MW)",
+    "efficiency": "Eficiencia"
+  },
+  "table": {
+    "busNumber": "Barra #",
+    "voltage": "Voltaje (pu)",
+    "angle": "Ángulo (grados)",
+    "pInjection": "Inyección P (MW)",
+    "qInjection": "Inyección Q (MVAr)",
+    "fromBus": "Desde Barra",
+    "toBus": "Hasta Barra",
+    "pFlow": "Flujo P (MW)",
+    "qFlow": "Flujo Q (MVAr)",
+    "sFlow": "Flujo S (MVA)",
+    "losses": "Pérdidas (MW)"
+  },
+  "method": {
+    "dc": "Flujo de Potencia DC",
+    "notImplemented": "Flujo de potencia AC no implementado aún"
+  }
+}

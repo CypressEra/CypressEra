@@ -1,0 +1,62 @@
+{
+  "short_name": "CypressEra Portal",
+  "name": "CypressEra Portal - AI-automated Power System Analysis Platform",
+  "description": "AI-automated power system analysis platform with LLM-powered insights. Docker-ready, cloud-native architecture for power flow calculations.",
+  "categories": ["utilities", "productivity", "engineering"],
+  "icons": [
+    {
+      "src": "logo.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo.svg",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "landscape-primary",
+  "theme_color": "#1a1a2e",
+  "background_color": "#ffffff",
+  "scope": "/",
+  "lang": "en-US",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "shortcuts": [
+    {
+      "name": "New Analysis",
+      "short_name": "Analysis",
+      "description": "Start a new power flow analysis",
+      "url": "/?action=new-analysis",
+      "icons": [{ "src": "logo192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Open File",
+      "short_name": "Open",
+      "description": "Open a case file",
+      "url": "/?action=open-file",
+      "icons": [{ "src": "logo192.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": [],
+  "handle_links": "preferred",
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
+}

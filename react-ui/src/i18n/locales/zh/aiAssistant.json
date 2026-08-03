@@ -1,0 +1,30 @@
+{
+  "title": "AI助手",
+  "welcomeMessage": "您好！我是您的AI助手Chuckle Chuckie。今天我可以如何帮助您进行潮流分析？",
+  "presetQuestionsLabel": "可以这样问我",
+  "presetQuestions": [
+    "IEEE 25 节点网络中哪个母线的电压最低？",
+    "对 IEEE 25 节点网络运行一次示例 AC 故障分析"
+  ],
+  "placeholder": "询问任何关于潮流分析的问题...",
+  "send": "发送",
+  "typing": "AI正在输入...",
+  "useKnowledgeBase": "使用知识库",
+  "knowledgeBaseButton": "知识库",
+  "engineCallingTitle": "正在调用 Xolution 引擎",
+  "engineCallingDefaultDetail": "正在执行 SDK 函数",
+  "engineCallingMore": "还有 {{count}} 个函数调用…",
+  "responses": {
+    "default": "我理解您关于潮流分析的问题。让我来帮助您。您能提供更多关于您想要分析的具体细节吗？",
+    "powerFlow": "潮流分析有助于确定电力系统的稳态运行条件。我可以帮助您理解结果、解决收敛问题或解释不同的计算方法。",
+    "convergence": "潮流分析中的收敛问题通常表示系统问题，如线路过载、电压违规或系统数据错误。让我帮助您识别和解决这些问题。",
+    "methods": "有几种潮流计算方法：直流潮流（快速、近似）、交流潮流（准确、较慢）和快速解耦（平衡方法）。您使用的是哪种方法？",
+    "results": "潮流结果包括母线电压、线路潮流和系统损耗。我可以帮助您解释这些结果并识别任何系统问题或优化机会。"
+  },
+  "errors": {
+    "sendFailed": "发送消息失败。请重试。",
+    "networkError": "网络错误。请检查您的连接。",
+    "serverError": "服务器错误。请稍后重试。"
+  },
+  "stopGeneration": "停止"
+}

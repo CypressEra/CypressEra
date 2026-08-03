@@ -1,0 +1,48 @@
+/* Result-cell styling shared by the per-type column definitions.
+
+   Severity language: darker, calmer accent colors (theme-aware tokens in
+   App.css) — never saturated red, no background tints. */
+
+/* Severity on the value itself: at/above the emergency rating or outside the
+   voltage band; the amber step is above the report threshold. */
+.sevHigh {
+  color: var(--sev-high-fg, #d70015);
+  font-weight: 600;
+}
+
+.sevWarn {
+  color: var(--sev-warn-fg, #9a6b00);
+  font-weight: 500;
+}
+
+/* Row verdict — the darker, calmer red; plain text, no background. */
+.resultViolation {
+  color: var(--sev-high-fg, #d70015);
+  font-weight: 600;
+}
+
+.resultBelow {
+  color: var(--text-secondary);
+}
+
+/* Islanded / non-converged status — amber, plain text. */
+.resultStatus {
+  color: var(--sev-warn-fg, #9a6b00);
+  font-weight: 600;
+}
+
+/* Amber pill flagging a monitored element already overloaded in the base case
+   — distinct from the red contingency-violation pill. */
+.preExistingTag {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--sev-warn-fg, #9a6b00);
+  background: var(--sev-warn-bg, rgba(255, 159, 10, 0.14));
+  border-radius: 4px;
+  padding: 1px 5px;
+  vertical-align: middle;
+}

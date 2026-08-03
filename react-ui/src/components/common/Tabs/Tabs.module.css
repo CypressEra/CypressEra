@@ -1,0 +1,38 @@
+/* Segmented tab strip — matches the app's .view-tabs pill pattern */
+
+.tabs {
+  display: inline-flex;
+  gap: 0;
+  background: var(--bg-tertiary);
+  padding: 2px;
+  border-radius: 7px;
+}
+
+.tab {
+  padding: 5px 14px;
+  border: none;
+  background: transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  font-family: inherit;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tab:hover:not(.tabActive):not(:disabled) {
+  color: var(--text-primary);
+}
+
+.tabActive {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.tab:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
