@@ -48,7 +48,9 @@ jobs:
         with:
           context: ./api-server
           file: ./api-server/Dockerfile
-          push: ${{ github.event_name == 'push' }}
+          # Build-check only. Images are published by CypressEra's internal CI
+          # under the same names; this public repo never pushes to ghcr.
+          push: false
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
