@@ -48,9 +48,9 @@ All images are public on ghcr.io — no registry authentication is needed.
 ## Quick Start
 
 ```bash
-# 1. Clone the deploy repo
-git clone https://github.com/CypressEra/product-deploy.git
-cd product-deploy
+# 1. Clone the repository
+git clone https://github.com/CypressEra/CypressEra.git
+cd CypressEra/product-deploy
 
 # 2. Run deploy.sh (installs Docker, generates secrets, pulls images, starts services)
 ./deploy.sh
