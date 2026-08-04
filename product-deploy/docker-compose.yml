@@ -27,6 +27,9 @@ services:
       - AUTH_JWT_SECRET=${AUTH_JWT_SECRET}
       - AUTH_ADMIN_EMAIL=${AUTH_ADMIN_EMAIL}
       - AUTH_ADMIN_PASSWORD=${AUTH_ADMIN_PASSWORD}
+      # Issue refresh tokens so clients silently renew short-lived access
+      # tokens instead of re-logging in every ~15 minutes.
+      - AUTH_REFRESH_ENABLED=${AUTH_REFRESH_ENABLED:-false}
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-}
       - SERVICE_AUTH_SECRET=${SERVICE_AUTH_SECRET}
